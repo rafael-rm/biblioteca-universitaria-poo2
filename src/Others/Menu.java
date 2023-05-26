@@ -3,6 +3,27 @@ import java.util.Scanner;
 
 public class Menu {
 
+    public static final int GERENCIAR_ACERVO = 1;
+    public static final int EMPRESTAR_ITEM = 2;
+    public static final int IMPRIMIR_FICHA_CARTOGRAFICA = 3;
+    public static final int PESQUISAR_ITEM_NO_ACERVO = 4;
+    public static final int ENCERRAR_PROGRAMA = 0;
+
+    public static final int LISTAR_ITEM = 1;
+    public static final int CADASTRAR_ITEM = 2;
+    public static final int REMOVER_ITEM = 3;
+    public static final int EDITAR_ITEM = 4;
+    public static final int VOLTAR_PARA_O_MENU_PRINCIPAL = 0;
+    public static final int LISTAR_TODOS_ITENS = 1;
+    public static final int LISTAR_LIVROS = 2;
+    public static final int LISTAR_MAPAS = 3;
+    public static final int LISTAR_PERIODICOS = 4;
+    public static final int LISTAR_TCCS = 5;
+    public static final int LISTAR_RELATORIOS = 6;
+    public static final int LISTAR_CARTAZES = 7;
+    public static final int LISTAR_MIDIAS = 8;
+    public static final int VOLTAR_PARA_O_MENU_CRUD = 0;
+
     public static int menuPrincipal(){
         Scanner scan = new Scanner(System.in);
         int opcao = 0;
@@ -40,7 +61,7 @@ public class Menu {
 
     public static int menuListar() {
         Scanner scan = new Scanner(System.in);
-        int opcao = 0;
+        int opcao;
         do {
             System.out.println("[INFO] Informe o item que deseja Listar");
             System.out.println("1 - Listar todos os itens");
@@ -61,8 +82,7 @@ public class Menu {
 
     public static int menuCadastrar() {
         Scanner scan = new Scanner(System.in);
-
-        int opcao = 0;
+        int opcao;
         do {
 
             System.out.println("[INFO] Informe o item a ser cadastrado");
