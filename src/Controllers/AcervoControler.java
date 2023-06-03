@@ -15,6 +15,9 @@ import static Others.Menu.LISTAR_LIVROS;
 import static Others.Menu.LISTAR_TODOS_ITENS;
 
 public class AcervoControler {
+    public static final int ITEM_EMPRESTADO = 1;
+    public static final int ITEM_SEM_EXEMPLAR_DISPONIVEL = 2;
+    public static final int ITEM_NAO_ENCONTRADO = 3;
     private static AcervoControler instance;
     private ArrayList<AcervoBase> listAcervos;
     private int idCounter;
@@ -64,13 +67,55 @@ public class AcervoControler {
         System.out.println("Item cadastrado com sucesso!");
     }
 
-    public void listarAcervo(){
+    public boolean removerAcervo(int id){
+        AcervoControler controller = AcervoControler.getInstance("prod");
+        for (AcervoBase item : controller.listAcervos) {
+            if (item.getId() == id){
+                controller.listAcervos.remove(item);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean editarAcervo(int id){
+        boolean status = getItem(id);
+        if (status){
+            AcervoControler controller = AcervoControler.getInstance("prod");
+            for (AcervoBase item : controller.listAcervos) {
+                if (item.getId() == id){
+                    item.cadastrar();
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public boolean imprimirFichaCatalografica(){
+        System.out.println("Digite o ID do item que deseja imprimir a ficha catalografica: ");
+        Scanner sc = new Scanner(System.in);
+        int id = sc.nextInt();
+        boolean status = getItem(id);
+        if (status){
+            AcervoControler controller = AcervoControler.getInstance("prod");
+            for (AcervoBase item : controller.listAcervos) {
+                if (item.getId() == id){
+                    item.imprimirFicha();
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public void listarAcervo() {
         AcervoControler controller = AcervoControler.getInstance("prod");
         Scanner sc = new Scanner(System.in);
         int opcao = Menu.menuListar();
         if (opcao == 0) return;
 
-        if (controller.listAcervos.isEmpty()){
+        if (controller.listAcervos.isEmpty()) {
             System.out.println("Não há itens cadastrados!");
             System.out.println("Pressione enter para continuar...");
             sc.nextLine();
@@ -78,7 +123,7 @@ public class AcervoControler {
         }
 
         int count = 0;
-        switch (opcao){
+        switch (opcao) {
             case LISTAR_TODOS_ITENS -> {
                 for (AcervoBase item : controller.listAcervos) {
                     System.out.printf("ID: %d, Nome: %s, Quantidade exemplares: %d%n", item.getId(), item.getTitulo(), item.getQtd_exemplares());
@@ -88,7 +133,7 @@ public class AcervoControler {
             }
             case LISTAR_LIVROS -> {
                 for (AcervoBase item : controller.listAcervos) {
-                    if (item instanceof Livro){
+                    if (item instanceof Livro) {
                         count++;
                         System.out.printf("ID: %d, Nome: %s, Quantidade exemplares: %d%n", item.getId(), item.getTitulo(), item.getQtd_exemplares());
                     }
@@ -102,7 +147,7 @@ public class AcervoControler {
             }
             case Menu.LISTAR_MAPAS -> {
                 for (AcervoBase item : controller.listAcervos) {
-                    if (item instanceof Mapa){
+                    if (item instanceof Mapa) {
                         count++;
                         System.out.printf("ID: %d, Nome: %s, Quantidade exemplares: %d%n", item.getId(), item.getTitulo(), item.getQtd_exemplares());
                     }
@@ -116,7 +161,7 @@ public class AcervoControler {
             }
             case Menu.LISTAR_PERIODICOS -> {
                 for (AcervoBase item : controller.listAcervos) {
-                    if (item instanceof Periodico){
+                    if (item instanceof Periodico) {
                         count++;
                         System.out.printf("ID: %d, Nome: %s, Quantidade exemplares: %d%n", item.getId(), item.getTitulo(), item.getQtd_exemplares());
                     }
@@ -130,7 +175,7 @@ public class AcervoControler {
             }
             case Menu.LISTAR_TCCS -> {
                 for (AcervoBase item : controller.listAcervos) {
-                    if (item instanceof Tcc){
+                    if (item instanceof Tcc) {
                         count++;
                         System.out.printf("ID: %d, Nome: %s, Quantidade exemplares: %d%n", item.getId(), item.getTitulo(), item.getQtd_exemplares());
                     }
@@ -144,7 +189,7 @@ public class AcervoControler {
             }
             case Menu.LISTAR_RELATORIOS -> {
                 for (AcervoBase item : controller.listAcervos) {
-                    if (item instanceof Relatorio){
+                    if (item instanceof Relatorio) {
                         count++;
                         System.out.printf("ID: %d, Nome: %s, Quantidade exemplares: %d%n", item.getId(), item.getTitulo(), item.getQtd_exemplares());
                     }
@@ -158,7 +203,7 @@ public class AcervoControler {
             }
             case Menu.LISTAR_CARTAZES -> {
                 for (AcervoBase item : controller.listAcervos) {
-                    if (item instanceof Cartaz){
+                    if (item instanceof Cartaz) {
                         count++;
                         System.out.printf("ID: %d, Nome: %s, Quantidade exemplares: %d%n", item.getId(), item.getTitulo(), item.getQtd_exemplares());
                     }
@@ -172,7 +217,7 @@ public class AcervoControler {
             }
             case Menu.LISTAR_MIDIAS -> {
                 for (AcervoBase item : controller.listAcervos) {
-                    if (item instanceof Midia){
+                    if (item instanceof Midia) {
                         count++;
                         System.out.printf("ID: %d, Nome: %s, Quantidade exemplares: %d%n", item.getId(), item.getTitulo(), item.getQtd_exemplares());
                     }
@@ -186,5 +231,40 @@ public class AcervoControler {
             }
             default -> throw new IllegalStateException("Unexpected value: " + opcao);
         }
+    }
+
+    public boolean getItem (int id){
+        AcervoControler controller = AcervoControler.getInstance("prod");
+        for (AcervoBase item : controller.listAcervos) {
+            if (item.getId() == id){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void pesquisarItem (int id) {
+        AcervoControler controller = AcervoControler.getInstance("prod");
+        for (AcervoBase item : controller.listAcervos) {
+            if (item.getId() == id)
+                item.imprimir();
+        }
+    }
+
+    public int emprestarItem(int id) {
+        AcervoControler controller = AcervoControler.getInstance("prod");
+        for (AcervoBase item : controller.listAcervos) {
+            if (item.getId() == id) {
+
+                if (item.getQtd_exemplares() > item.getEmprestados()) {
+                    item.setEmprestados(item.getEmprestados() + 1);
+                    return ITEM_EMPRESTADO;
+                }else{
+                    return ITEM_NAO_ENCONTRADO;
+                }
+
+            }
+        }
+        return ITEM_SEM_EXEMPLAR_DISPONIVEL;
     }
 }

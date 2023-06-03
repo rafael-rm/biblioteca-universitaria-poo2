@@ -4,9 +4,33 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Autor {
-    public String nome;
-    public String dataNascimento;
-    public ArrayList<AcervoBase> obras;
+    protected String nome;
+    protected String dataNascimento;
+    protected ArrayList<AcervoBase> obras;
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public String getDataNascimento() {
+        return dataNascimento;
+    }
+
+    public void setDataNascimento(String dataNascimento) {
+        this.dataNascimento = dataNascimento;
+    }
+
+    public ArrayList<AcervoBase> getObras() {
+        return obras;
+    }
+
+    public void setObras(ArrayList<AcervoBase> obras) {
+        this.obras = obras;
+    }
 
     public void cadastrar () {
         Scanner scan = new Scanner(System.in);

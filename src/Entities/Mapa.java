@@ -10,7 +10,7 @@ enum EnumMapa {
 };
 
 public class Mapa extends Documento {
-    public EnumMapa tipo;
+    protected EnumMapa tipo;
 
     @Override
     public void cadastrar() {
@@ -29,5 +29,11 @@ public class Mapa extends Documento {
             case 4 -> this.tipo = EnumMapa.ECONOMICO;
             default -> System.out.println("Tipo inválido");
         }
+    }
+
+    @Override
+public void imprimir() {
+        super.imprimir();
+        System.out.println("Tipo: " + tipo);
     }
 }

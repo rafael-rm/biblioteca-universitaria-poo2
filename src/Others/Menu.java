@@ -5,7 +5,7 @@ public class Menu {
 
     public static final int GERENCIAR_ACERVO = 1;
     public static final int EMPRESTAR_ITEM = 2;
-    public static final int IMPRIMIR_FICHA_CARTOGRAFICA = 3;
+    public static final int IMPRIMIR_FICHA_CATALOGRAFICA  = 3;
     public static final int PESQUISAR_ITEM_NO_ACERVO = 4;
     public static final int ENCERRAR_PROGRAMA = 0;
 

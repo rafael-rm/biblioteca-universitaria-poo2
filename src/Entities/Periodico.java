@@ -8,8 +8,8 @@ enum EnumPeriodico {
 };
 
 public class Periodico extends Documento {
-    public String ISSN;
-    public EnumPeriodico tipo;
+    protected String ISSN;
+    protected EnumPeriodico tipo;
 
     @Override
     public void cadastrar(){
@@ -24,5 +24,11 @@ public class Periodico extends Documento {
             case 2 -> this.tipo = EnumPeriodico.JORNAL;
             default -> System.out.println("Tipo inválido");
         }
+    }
+
+    @Override
+    public void imprimir() {
+        super.imprimir();
+        System.out.println("Tipo: " + tipo);
     }
 }

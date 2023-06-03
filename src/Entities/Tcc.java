@@ -9,7 +9,7 @@ enum EnumTcc {
 };
 
 public class Tcc extends Documento {
-    public EnumTcc tipo;
+    protected EnumTcc tipo;
 
     @Override
     public void cadastrar(){
@@ -26,5 +26,11 @@ public class Tcc extends Documento {
             case 3 -> this.tipo = EnumTcc.TESE;
             default -> System.out.println("Tipo inválido");
         }
+    }
+
+    @Override
+    public void imprimir() {
+        super.imprimir();
+        System.out.println("Tipo: " + tipo);
     }
 }

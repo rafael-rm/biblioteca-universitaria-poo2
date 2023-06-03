@@ -10,7 +10,7 @@ enum EnumMidia {
 };
 
 public class Midia extends AcervoBase {
-    public EnumMidia tipo;
+    protected EnumMidia tipo;
 
     @Override
     public void cadastrar(){
@@ -29,5 +29,11 @@ public class Midia extends AcervoBase {
             case 4 -> this.tipo = EnumMidia.DVD;
             default -> System.out.println("Tipo inválido");
         }
+    }
+
+    @Override
+    public void imprimir() {
+        super.imprimir();
+        System.out.println("Tipo: " + tipo);
     }
 }

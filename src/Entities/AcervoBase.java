@@ -6,18 +6,18 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class AcervoBase {
-    public int id;
-    public String titulo;
-    public ArrayList<Autor> autores;
-    public int edicao;
-    public String cidade;
-    public String editora;
-    public int ano;
-    public String cdu;
-    public String assunto;
-    public ArrayList<String> palavras_chave;
-    public int qtd_exemplares;
-    public int emprestados;
+    protected int id;
+    protected String titulo;
+    protected ArrayList<Autor> autores;
+    protected int edicao;
+    protected String cidade;
+    protected String editora;
+    protected int ano;
+    protected String cdu;
+    protected String assunto;
+    protected ArrayList<String> palavras_chave;
+    protected int qtd_exemplares;
+    protected int emprestados;
 
     public AcervoBase() {
         id = 0;
@@ -78,11 +78,42 @@ public class AcervoBase {
         scan = new Scanner(System.in);
         qtd_exemplares = scan.nextInt();
 
-        id = controller.getIdCounter();
+        if (id == 0)
+            id = controller.getIdCounter();
     }
 
     public int getId() {
         return id;
+    }
+
+    public void imprimir(){
+        System.out.println("ID: " + id);
+        System.out.println("Título: " + titulo);
+        System.out.println("Autores: ");
+        for (int i = 0; i < autores.size(); i++) {
+            System.out.println("Nome: " + autores.get(i).getNome());
+            System.out.println("Data de nascimento: " + autores.get(i).getDataNascimento());
+        }
+        System.out.println("Edição: " + edicao);
+        System.out.println("Cidade: " + cidade);
+        System.out.println("Editora: " + editora);
+        System.out.println("Ano: " + ano);
+        System.out.println("CDU: " + cdu);
+        System.out.println("Assunto: " + assunto);
+        System.out.println("Palavras chave:");
+        for (int i = 0; i < palavras_chave.size(); i++) {
+            System.out.print(" " + palavras_chave.get(i));
+        }
+        System.out.println("\nQuantidade de exemplares: " + qtd_exemplares);
+        System.out.println("Quantidade de exemplares emprestados: " + emprestados);
+    }
+
+    public void imprimirFicha(){
+        System.out.println("-----------------------------------------------------------------------------------------");
+        for (int i = 0; i < autores.size(); i++) {
+            System.out.print(autores.get(i).getNome() + " " + i+1+ ". ");
+        }
+        System.out.printf("\n%s - %d Edição - %s : %s, %d", getTitulo(), getEdicao(), getCidade(), getEditora(), getAno());
     }
 
     public void setId(int id) {

@@ -2,6 +2,8 @@ package Entities;
 
 import Controllers.AcervoControler;
 
+import javax.sound.midi.Soundbank;
+import javax.swing.*;
 import java.util.Scanner;
 
 enum EnumCartaz {
@@ -11,7 +13,7 @@ enum EnumCartaz {
 };
 
 public class Cartaz extends Documento {
-    public EnumCartaz tipo;
+    protected EnumCartaz tipo;
 
     @Override
     public void cadastrar(){
@@ -28,6 +30,12 @@ public class Cartaz extends Documento {
             case 3 -> this.tipo = EnumCartaz.EDUCATIVO;
             default -> System.out.println("Tipo inválido");
         }
+    }
+
+    @Override
+    public void imprimir() {
+        super.imprimir();
+        System.out.println("Tipo: " + tipo);
     }
 
 }
