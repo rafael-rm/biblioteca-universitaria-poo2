@@ -1,12 +1,15 @@
 import Controllers.AcervoControler;
 import Entities.AcervoBase;
-
+import Entities.Documento;
+import Entities.Utils;
+import Infrastructure.DatabaseMysql;
+import java.sql.Connection;
 import java.util.Scanner;
-
 import static Others.Menu.*;
 
 public class Main {
     public static void main(String[] args) {
+
         AcervoControler controllerAc = AcervoControler.getInstance("prod");
         Scanner sc = new Scanner(System.in);
 

@@ -7,7 +7,10 @@ import Entities.Midia;
 import Entities.Periodico;
 import Entities.Relatorio;
 import Entities.Tcc;
+import Infrastructure.DatabaseMysql;
 import Others.Menu;
+
+import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -42,8 +45,20 @@ public class AcervoControler {
     }
 
     public int getIdCounter() {
-        this.idCounter++;
-        return this.idCounter;
+        DatabaseMysql db = new DatabaseMysql();
+        Connection conn = db.getConnection();
+        String sql = "SELECT MAX(id) FROM acervo";
+        int idCounter = 0;
+        try {
+            var stmt = conn.prepareStatement(sql);
+            var rs = stmt.executeQuery();
+            while (rs.next()) {
+                idCounter = rs.getInt(1);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return idCounter;
     }
 
     public void cadastrarAcervo(){
@@ -63,19 +78,23 @@ public class AcervoControler {
             default -> throw new IllegalStateException("Unexpected value: " + opcao);
         };
         item.cadastrar();
+        item.inserirNoBanco(item);
         controller.listAcervos.add(item);
         System.out.println("Item cadastrado com sucesso!");
     }
 
     public boolean removerAcervo(int id){
-        AcervoControler controller = AcervoControler.getInstance("prod");
-        for (AcervoBase item : controller.listAcervos) {
-            if (item.getId() == id){
-                controller.listAcervos.remove(item);
-                return true;
-            }
+        DatabaseMysql db = new DatabaseMysql();
+        Connection conn = db.getConnection();
+        String sql = "DELETE FROM acervo WHERE id = '" + id + "';";
+        try {
+            var stmt = conn.prepareStatement(sql);
+            var rs = stmt.executeUpdate();
+            return rs != 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
         }
-        return false;
     }
 
     public boolean editarAcervo(int id){

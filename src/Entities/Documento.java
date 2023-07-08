@@ -1,5 +1,11 @@
 package Entities;
 
+import Infrastructure.DatabaseMysql;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Scanner;
 
 public class Documento extends AcervoBase {
@@ -15,6 +21,14 @@ public class Documento extends AcervoBase {
         System.out.println("Insira o tamanho da página: ");
         scan = new Scanner(System.in);
         tam_pag = scan.nextFloat();
+    }
+
+    @Override
+    public void inserirNoBanco(AcervoBase acervo){
+        super.inserirNoBanco(acervo);
+        DatabaseMysql db = new DatabaseMysql();
+        String sql = "UPDATE acervo SET num_pag = '" + num_pag + "', tam_pag = '" + tam_pag + "', tipo = 'Documento' WHERE id = '" + id + "';";
+        db.execute(sql);
     }
 
     public int getNum_pag() {
@@ -50,5 +64,33 @@ public class Documento extends AcervoBase {
         }
 
         System.out.printf("\n\n\t\t\tCDU: %s\n\n", getCdu());
+    }
+
+    public static Object obterDoBanco(int id, Documento acervo){
+        DatabaseMysql db = new DatabaseMysql();
+        Connection conn = db.getConnection();
+        String sql = "SELECT * FROM acervo WHERE id = " + id + ";";
+        try {
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()){
+                acervo.setId(rs.getInt("id"));
+                acervo.setTitulo(rs.getString("titulo"));
+                acervo.setEdicao(rs.getInt("edicao"));
+                acervo.setCidade(rs.getString("cidade"));
+                acervo.setEditora(rs.getString("editora"));
+                acervo.setAno(rs.getInt("ano"));
+                acervo.setCdu(rs.getString("cdu"));
+                acervo.setAssunto(rs.getString("assunto"));
+                acervo.setPalavras_chave_string(rs.getString("palavras_chave"));
+                acervo.setQtd_exemplares(rs.getInt("qtd_exemplares"));
+                acervo.setEmprestados(rs.getInt("emprestados"));
+                acervo.setTam_pag(rs.getInt("tam_pag"));
+                acervo.setNum_pag(rs.getInt("num_pag"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return acervo;
     }
 }

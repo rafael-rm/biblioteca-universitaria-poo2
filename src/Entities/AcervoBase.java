@@ -2,8 +2,13 @@ package Entities;
 
 import Controllers.AcervoControler;
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Scanner;
+import Infrastructure.DatabaseMysql;
+import java.sql.Connection;
 
 public class AcervoBase {
     protected int id;
@@ -16,6 +21,7 @@ public class AcervoBase {
     protected String cdu;
     protected String assunto;
     protected ArrayList<String> palavras_chave;
+    protected String palavras_chave_string;
     protected int qtd_exemplares;
     protected int emprestados;
 
@@ -30,6 +36,7 @@ public class AcervoBase {
         cdu = "Default";
         assunto = "Default";
         palavras_chave = new ArrayList<String>();
+        palavras_chave_string = "Default";
         qtd_exemplares = 0;
         emprestados = 0;
     }
@@ -78,12 +85,83 @@ public class AcervoBase {
         scan = new Scanner(System.in);
         qtd_exemplares = scan.nextInt();
 
-        if (id == 0)
+        if (id == 0) {
             id = controller.getIdCounter();
+            id++;
+        }
+
+        palavras_chave_string = "";
+        for (int i = 0; i < palavras_chave.size(); i++) {
+            palavras_chave_string += palavras_chave.get(i);
+            if (i != palavras_chave.size() - 1)
+                palavras_chave_string += ", ";
+        }
     }
 
-    public int getId() {
-        return id;
+    public void inserirNoBanco(AcervoBase acervo){
+        DatabaseMysql db = new DatabaseMysql();
+        String sql = "INSERT INTO acervo (id, titulo, edicao, cidade, editora, ano, cdu, assunto, palavras_chave, qtd_exemplares, emprestados) VALUES (" +
+                acervo.getId() + ", '" +
+                acervo.getTitulo() + "', " +
+                acervo.getEdicao() + ", '" +
+                acervo.getCidade() + "', '" +
+                acervo.getEditora() + "', " +
+                acervo.getAno() + ", '" +
+                acervo.getCdu() + "', '" +
+                acervo.getAssunto() + "', '" +
+                acervo.getPalavras_chave_string() + "', " +
+                acervo.getQtd_exemplares() + ", " +
+                acervo.getEmprestados() + ");";
+        db.execute(sql);
+    }
+
+    public static Object obterDoBanco(int id, AcervoBase acervo){
+        DatabaseMysql db = new DatabaseMysql();
+        Connection conn = db.getConnection();
+        String sql = "SELECT * FROM acervo WHERE id = " + id + ";";
+        try {
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()){
+                acervo.setId(rs.getInt("id"));
+                acervo.setTitulo(rs.getString("titulo"));
+                acervo.setEdicao(rs.getInt("edicao"));
+                acervo.setCidade(rs.getString("cidade"));
+                acervo.setEditora(rs.getString("editora"));
+                acervo.setAno(rs.getInt("ano"));
+                acervo.setCdu(rs.getString("cdu"));
+                acervo.setAssunto(rs.getString("assunto"));
+                acervo.setPalavras_chave_string(rs.getString("palavras_chave"));
+                acervo.setQtd_exemplares(rs.getInt("qtd_exemplares"));
+                acervo.setEmprestados(rs.getInt("emprestados"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return acervo;
+    }
+
+    public static Object getTipo(int id) {
+        DatabaseMysql db = new DatabaseMysql();
+        Connection conn = db.getConnection();
+        String sql = "SELECT tipo FROM acervo WHERE id = " + id + ";";
+        String tipo = "";
+        try {
+            PreparedStatement ps = conn.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()){
+                tipo = rs.getString("tipo");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        switch (tipo) {
+            case "Livro":
+                return new Livro();
+        }
+        return null;
+
     }
 
     public void imprimir(){
@@ -207,4 +285,17 @@ public class AcervoBase {
     public void setEmprestados(int emprestados) {
         this.emprestados = emprestados;
     }
+
+    public String getPalavras_chave_string() {
+        return palavras_chave_string;
+    }
+
+    public void setPalavras_chave_string(String palavras_chave_string) {
+        this.palavras_chave_string = palavras_chave_string;
+    }
+
+    public int getId() {
+        return id;
+    }
+
 }
