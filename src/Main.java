@@ -4,6 +4,7 @@ import Entities.Documento;
 import Entities.Utils;
 import Infrastructure.DatabaseMysql;
 import java.sql.Connection;
+import java.util.List;
 import java.util.Scanner;
 import static Others.Menu.*;
 
@@ -66,7 +67,10 @@ public class Main {
                         System.out.println("Item não encontrado!");
                     break;
                 case IMPRIMIR_FICHA_CATALOGRAFICA:
-                    status = controllerAc.imprimirFichaCatalografica();
+                    sc = new Scanner(System.in);
+                    System.out.println("Digite o ID do item que deseja imprimir a ficha catalográfica: ");
+                    id = sc.nextInt();
+                    status = controllerAc.imprimirFichaCatalografica(id);
                     if (!status)
                         System.out.println("Item nao encontrado");
                     break;

@@ -23,7 +23,6 @@ public class DatabaseMysql {
         try {
             Class.forName(DRIVER);
             conn = DriverManager.getConnection(connect, USER, PASS);
-            System.out.println("Conexão realizada com sucesso!");
         } catch (ClassNotFoundException | SQLException ex) {
             System.out.println("Não foi possível realizar a conexão com o banco de dados!");
         }

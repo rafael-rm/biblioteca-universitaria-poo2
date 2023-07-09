@@ -115,6 +115,23 @@ public class AcervoBase {
         db.execute(sql);
     }
 
+    public void atualizarNoBanco(AcervoBase acervo, int id){
+        DatabaseMysql db = new DatabaseMysql();
+        String sql = "UPDATE acervo SET " +
+                "titulo = '" + acervo.getTitulo() + "', " +
+                "edicao = " + acervo.getEdicao() + ", " +
+                "cidade = '" + acervo.getCidade() + "', " +
+                "editora = '" + acervo.getEditora() + "', " +
+                "ano = " + acervo.getAno() + ", " +
+                "cdu = '" + acervo.getCdu() + "', " +
+                "assunto = '" + acervo.getAssunto() + "', " +
+                "palavras_chave = '" + acervo.getPalavras_chave_string() + "', " +
+                "qtd_exemplares = " + acervo.getQtd_exemplares() + ", " +
+                "emprestados = " + acervo.getEmprestados() + " " +
+                "WHERE id = " + id + ";";
+        db.execute(sql);
+    }
+
     public static Object obterDoBanco(int id, AcervoBase acervo){
         DatabaseMysql db = new DatabaseMysql();
         Connection conn = db.getConnection();

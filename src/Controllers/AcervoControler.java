@@ -1,17 +1,14 @@
 package Controllers;
-import Entities.AcervoBase;
-import Entities.Cartaz;
-import Entities.Livro;
-import Entities.Mapa;
-import Entities.Midia;
-import Entities.Periodico;
-import Entities.Relatorio;
-import Entities.Tcc;
+import Entities.*;
 import Infrastructure.DatabaseMysql;
 import Others.Menu;
 
 import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 import static Others.Menu.LISTAR_LIVROS;
@@ -22,8 +19,8 @@ public class AcervoControler {
     public static final int ITEM_SEM_EXEMPLAR_DISPONIVEL = 2;
     public static final int ITEM_NAO_ENCONTRADO = 3;
     private static AcervoControler instance;
-    private ArrayList<AcervoBase> listAcervos;
-    private int idCounter;
+    private final ArrayList<AcervoBase> listAcervos;
+    private final int idCounter;
     public String value;
 
     private AcervoControler(String value) {
@@ -99,33 +96,34 @@ public class AcervoControler {
 
     public boolean editarAcervo(int id){
         boolean status = getItem(id);
-        if (status){
-            AcervoControler controller = AcervoControler.getInstance("prod");
-            for (AcervoBase item : controller.listAcervos) {
-                if (item.getId() == id){
-                    item.cadastrar();
-                    return true;
-                }
-            }
-        }
-        return false;
+
+        if (!status) return false;
+
+        AcervoBase item = new AcervoBase();
+        item.cadastrar();
+        item.atualizarNoBanco(item, id);
+        return true;
     }
 
-    public boolean imprimirFichaCatalografica(){
-        System.out.println("Digite o ID do item que deseja imprimir a ficha catalografica: ");
-        Scanner sc = new Scanner(System.in);
-        int id = sc.nextInt();
+    public boolean imprimirFichaCatalografica(int id){
         boolean status = getItem(id);
-        if (status){
-            AcervoControler controller = AcervoControler.getInstance("prod");
-            for (AcervoBase item : controller.listAcervos) {
-                if (item.getId() == id){
-                    item.imprimirFicha();
-                    return true;
-                }
-            }
+        if (!status) return false;
+
+        var obj = Utils.obterDoBanco(id);
+
+        switch (obj) {
+            case Livro livro -> livro.imprimirFicha();
+            case Mapa mapa -> mapa.imprimirFicha();
+            case Periodico periodico -> periodico.imprimirFicha();
+            case Tcc tcc -> tcc.imprimirFicha();
+            case Relatorio relatorio -> relatorio.imprimirFicha();
+            case Cartaz cartaz -> cartaz.imprimirFicha();
+            case Midia midia -> midia.imprimirFicha();
+            case Documento documento -> documento.imprimirFicha();
+            case AcervoBase acervoBase -> acervoBase.imprimirFicha();
+            default -> throw new IllegalStateException("Unexpected value: " + obj);
         }
-        return false;
+        return true;
     }
 
     public void listarAcervo() {
@@ -134,7 +132,9 @@ public class AcervoControler {
         int opcao = Menu.menuListar();
         if (opcao == 0) return;
 
-        if (controller.listAcervos.isEmpty()) {
+        List<AcervoBase> listAcervos = Utils.obterTodosDoBanco();
+
+        if (listAcervos.isEmpty()) {
             System.out.println("Não há itens cadastrados!");
             System.out.println("Pressione enter para continuar...");
             sc.nextLine();
@@ -144,14 +144,14 @@ public class AcervoControler {
         int count = 0;
         switch (opcao) {
             case LISTAR_TODOS_ITENS -> {
-                for (AcervoBase item : controller.listAcervos) {
+                for (AcervoBase item : listAcervos) {
                     System.out.printf("ID: %d, Nome: %s, Quantidade exemplares: %d%n", item.getId(), item.getTitulo(), item.getQtd_exemplares());
                 }
                 System.out.println("Pressione enter para continuar...");
                 sc.nextLine();
             }
             case LISTAR_LIVROS -> {
-                for (AcervoBase item : controller.listAcervos) {
+                for (AcervoBase item : listAcervos) {
                     if (item instanceof Livro) {
                         count++;
                         System.out.printf("ID: %d, Nome: %s, Quantidade exemplares: %d%n", item.getId(), item.getTitulo(), item.getQtd_exemplares());
@@ -165,7 +165,7 @@ public class AcervoControler {
                 sc.nextLine();
             }
             case Menu.LISTAR_MAPAS -> {
-                for (AcervoBase item : controller.listAcervos) {
+                for (AcervoBase item : listAcervos) {
                     if (item instanceof Mapa) {
                         count++;
                         System.out.printf("ID: %d, Nome: %s, Quantidade exemplares: %d%n", item.getId(), item.getTitulo(), item.getQtd_exemplares());
@@ -179,7 +179,7 @@ public class AcervoControler {
                 sc.nextLine();
             }
             case Menu.LISTAR_PERIODICOS -> {
-                for (AcervoBase item : controller.listAcervos) {
+                for (AcervoBase item : listAcervos) {
                     if (item instanceof Periodico) {
                         count++;
                         System.out.printf("ID: %d, Nome: %s, Quantidade exemplares: %d%n", item.getId(), item.getTitulo(), item.getQtd_exemplares());
@@ -193,7 +193,7 @@ public class AcervoControler {
                 sc.nextLine();
             }
             case Menu.LISTAR_TCCS -> {
-                for (AcervoBase item : controller.listAcervos) {
+                for (AcervoBase item : listAcervos) {
                     if (item instanceof Tcc) {
                         count++;
                         System.out.printf("ID: %d, Nome: %s, Quantidade exemplares: %d%n", item.getId(), item.getTitulo(), item.getQtd_exemplares());
@@ -207,7 +207,7 @@ public class AcervoControler {
                 sc.nextLine();
             }
             case Menu.LISTAR_RELATORIOS -> {
-                for (AcervoBase item : controller.listAcervos) {
+                for (AcervoBase item : listAcervos) {
                     if (item instanceof Relatorio) {
                         count++;
                         System.out.printf("ID: %d, Nome: %s, Quantidade exemplares: %d%n", item.getId(), item.getTitulo(), item.getQtd_exemplares());
@@ -221,7 +221,7 @@ public class AcervoControler {
                 sc.nextLine();
             }
             case Menu.LISTAR_CARTAZES -> {
-                for (AcervoBase item : controller.listAcervos) {
+                for (AcervoBase item : listAcervos) {
                     if (item instanceof Cartaz) {
                         count++;
                         System.out.printf("ID: %d, Nome: %s, Quantidade exemplares: %d%n", item.getId(), item.getTitulo(), item.getQtd_exemplares());
@@ -235,7 +235,7 @@ public class AcervoControler {
                 sc.nextLine();
             }
             case Menu.LISTAR_MIDIAS -> {
-                for (AcervoBase item : controller.listAcervos) {
+                for (AcervoBase item : listAcervos) {
                     if (item instanceof Midia) {
                         count++;
                         System.out.printf("ID: %d, Nome: %s, Quantidade exemplares: %d%n", item.getId(), item.getTitulo(), item.getQtd_exemplares());
@@ -253,36 +253,65 @@ public class AcervoControler {
     }
 
     public boolean getItem (int id){
-        AcervoControler controller = AcervoControler.getInstance("prod");
-        for (AcervoBase item : controller.listAcervos) {
-            if (item.getId() == id){
+        DatabaseMysql db = new DatabaseMysql();
+        Connection conn = db.getConnection();
+        String sql = "SELECT * FROM acervo WHERE id = " + id;
+        try {
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+            if (rs.next()) {
                 return true;
             }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
         return false;
     }
 
     public void pesquisarItem (int id) {
-        AcervoControler controller = AcervoControler.getInstance("prod");
-        for (AcervoBase item : controller.listAcervos) {
-            if (item.getId() == id)
-                item.imprimir();
+        DatabaseMysql db = new DatabaseMysql();
+        Connection conn = db.getConnection();
+        String sql = "SELECT * FROM acervo WHERE id = " + id;
+        try {
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+            if (rs.next()) {
+                System.out.printf("ID: %d, Nome: %s, Quantidade exemplares: %d%n", rs.getInt("id"), rs.getString("titulo"), rs.getInt("qtd_exemplares"));
+            } else {
+                System.out.println("Item não encontrado!");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 
     public int emprestarItem(int id) {
-        AcervoControler controller = AcervoControler.getInstance("prod");
-        for (AcervoBase item : controller.listAcervos) {
-            if (item.getId() == id) {
+        boolean status = getItem(id);
+        if (!status) {
+            System.out.println("Item não encontrado!");
+            return ITEM_NAO_ENCONTRADO;
+        }
 
-                if (item.getQtd_exemplares() > item.getEmprestados()) {
-                    item.setEmprestados(item.getEmprestados() + 1);
+        DatabaseMysql db = new DatabaseMysql();
+        Connection conn = db.getConnection();
+        String sql = "SELECT * FROM acervo WHERE id = " + id;
+
+        try {
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+            if (rs.next()) {
+                int qtd_exemplares = rs.getInt("qtd_exemplares");
+                int emprestados = rs.getInt("emprestados");
+                if (qtd_exemplares > emprestados) {
+                    sql = "UPDATE acervo SET emprestados = " + (emprestados + 1) + " WHERE id = " + id;
+                    stmt.executeUpdate(sql);
                     return ITEM_EMPRESTADO;
-                }else{
-                    return ITEM_NAO_ENCONTRADO;
+                } else {
+                    return ITEM_SEM_EXEMPLAR_DISPONIVEL;
                 }
-
             }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
         return ITEM_SEM_EXEMPLAR_DISPONIVEL;
     }
