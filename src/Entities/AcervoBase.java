@@ -158,29 +158,6 @@ public class AcervoBase {
         return acervo;
     }
 
-    public static Object getTipo(int id) {
-        DatabaseMysql db = new DatabaseMysql();
-        Connection conn = db.getConnection();
-        String sql = "SELECT tipo FROM acervo WHERE id = " + id + ";";
-        String tipo = "";
-        try {
-            PreparedStatement ps = conn.prepareStatement(sql);
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()){
-                tipo = rs.getString("tipo");
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        switch (tipo) {
-            case "Livro":
-                return new Livro();
-        }
-        return null;
-
-    }
-
     public void imprimir(){
         System.out.println("ID: " + id);
         System.out.println("Título: " + titulo);
