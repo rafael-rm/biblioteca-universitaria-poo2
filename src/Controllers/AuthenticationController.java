@@ -1,21 +1,26 @@
 package Controllers;
 
+import Infrastructure.DatabaseMysql;
+
+import java.sql.*;
 import java.util.Objects;
 import java.util.Scanner;
 
 public class AuthenticationController {
 
-    private String _login = "LOGIN";
-    private String _senha = "SENHA";
-
-    public boolean login() {
-        Scanner scan = new Scanner(System.in);
-        String login, senha;
-        System.out.println("Login: ");
-        login = scan.nextLine();
-        System.out.println("Senha: ");
-        senha = scan.nextLine();
-        return Objects.equals(login, _login) && Objects.equals(senha, _senha);
+    public static boolean login(String login, String senha) {
+        DatabaseMysql db = new DatabaseMysql();
+        Connection conn = db.getConnection();
+        String sql = "SELECT * FROM usuarios WHERE login = '" + login + "' AND senha = '" + senha + "';";
+        try {
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+            if (rs.next()) {
+                return true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 }
-

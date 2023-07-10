@@ -1,4 +1,5 @@
 import Controllers.AcervoControler;
+import Controllers.AuthenticationController;
 import Entities.AcervoBase;
 import Entities.Documento;
 import Entities.Utils;
@@ -12,9 +13,17 @@ public class Main {
     public static void main(String[] args) {
 
         AcervoControler controllerAc = AcervoControler.getInstance("prod");
-        Scanner sc = new Scanner(System.in);
+
+        boolean test = AuthenticationController.login("rafae3123l", "rafael123");
+        if (test) {
+            System.out.println("Login efetuado com sucesso!");
+        } else {
+            System.out.println("Login ou senha incorretos!");
+        }
+
 
         int opcao, subOpcao, id, status2;
+        Scanner sc;
         boolean status;
         do {
             opcao = menuPrincipal();
@@ -58,7 +67,7 @@ public class Main {
                     System.out.println("Digite o ID do item que deseja emprestar: ");
                     sc = new Scanner(System.in);
                     id = sc.nextInt();
-                    status2 = controllerAc.emprestarItem(id);
+                    status2 = AcervoBase.emprestarItem(id);
                     if (status2 == 1)
                         System.out.println("Item emprestado com sucesso!");
                     else if (status2 == 2)
@@ -78,9 +87,9 @@ public class Main {
                     System.out.println("Digite o ID do item que deseja pesquisar: ");
                     sc = new Scanner(System.in);
                     id = sc.nextInt();
-                    status = controllerAc.getItem(id);
+                    status = AcervoBase.getItem(id);
                     if (status)
-                        controllerAc.pesquisarItem(id);
+                        AcervoBase.pesquisarItem(id);
                     else
                         System.out.println("Item não encontrado!");
                     System.out.println("Aperte ENTER para continuar...");

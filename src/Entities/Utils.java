@@ -12,23 +12,16 @@ import java.util.List;
 public class Utils {
     public static Object obterDoBanco(int id){
         var obj = getTipo(id);
-        if (obj instanceof Livro){
-            return Livro.obterDoBanco(id, (Livro) obj);
-        } else if (obj instanceof Cartaz){
-            return Cartaz.obterDoBanco(id, (Cartaz) obj);
-        } else if (obj instanceof Relatorio){
-            return Relatorio.obterDoBanco(id, (Relatorio) obj);
-        } else if (obj instanceof Periodico){
-            return Periodico.obterDoBanco(id, (Periodico) obj);
-        } else if (obj instanceof Midia){
-            return Midia.obterDoBanco(id, (Midia) obj);
-        } else if (obj instanceof Tcc){
-            return Tcc.obterDoBanco(id, (Tcc) obj);
-        } else if (obj instanceof Mapa){
-            return Mapa.obterDoBanco(id, (Mapa) obj);
-        } else{
-            return AcervoBase.obterDoBanco(id, (AcervoBase) obj);
-        }
+        return switch (obj) {
+            case Livro livro -> Livro.obterDoBanco(id, livro);
+            case Cartaz cartaz -> Cartaz.obterDoBanco(id, cartaz);
+            case Relatorio relatorio -> Relatorio.obterDoBanco(id, relatorio);
+            case Periodico periodico -> Periodico.obterDoBanco(id, periodico);
+            case Midia midia -> Midia.obterDoBanco(id, midia);
+            case Tcc tcc -> Tcc.obterDoBanco(id, tcc);
+            case Mapa mapa -> Mapa.obterDoBanco(id, mapa);
+            case null, default -> AcervoBase.obterDoBanco(id, (AcervoBase) obj);
+        };
     }
 
     public static Object getTipo(int id) {

@@ -41,23 +41,6 @@ public class AcervoControler {
         return instance;
     }
 
-    public int getIdCounter() {
-        DatabaseMysql db = new DatabaseMysql();
-        Connection conn = db.getConnection();
-        String sql = "SELECT MAX(id) FROM acervo";
-        int idCounter = 0;
-        try {
-            var stmt = conn.prepareStatement(sql);
-            var rs = stmt.executeQuery();
-            while (rs.next()) {
-                idCounter = rs.getInt(1);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return idCounter;
-    }
-
     public void cadastrarAcervo(){
         AcervoControler controller = AcervoControler.getInstance("prod");
         int opcao = Menu.menuCadastrar();
@@ -81,21 +64,11 @@ public class AcervoControler {
     }
 
     public boolean removerAcervo(int id){
-        DatabaseMysql db = new DatabaseMysql();
-        Connection conn = db.getConnection();
-        String sql = "DELETE FROM acervo WHERE id = '" + id + "';";
-        try {
-            var stmt = conn.prepareStatement(sql);
-            var rs = stmt.executeUpdate();
-            return rs != 0;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
+        return AcervoBase.removerAcervo(id);
     }
 
     public boolean editarAcervo(int id){
-        boolean status = getItem(id);
+        boolean status = AcervoBase.getItem(id);
 
         if (!status) return false;
 
@@ -106,7 +79,7 @@ public class AcervoControler {
     }
 
     public boolean imprimirFichaCatalografica(int id){
-        boolean status = getItem(id);
+        boolean status = AcervoBase.getItem(id);
         if (!status) return false;
 
         var obj = Utils.obterDoBanco(id);
@@ -250,69 +223,5 @@ public class AcervoControler {
             }
             default -> throw new IllegalStateException("Unexpected value: " + opcao);
         }
-    }
-
-    public boolean getItem (int id){
-        DatabaseMysql db = new DatabaseMysql();
-        Connection conn = db.getConnection();
-        String sql = "SELECT * FROM acervo WHERE id = " + id;
-        try {
-            Statement stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery(sql);
-            if (rs.next()) {
-                return true;
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return false;
-    }
-
-    public void pesquisarItem (int id) {
-        DatabaseMysql db = new DatabaseMysql();
-        Connection conn = db.getConnection();
-        String sql = "SELECT * FROM acervo WHERE id = " + id;
-        try {
-            Statement stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery(sql);
-            if (rs.next()) {
-                System.out.printf("ID: %d, Nome: %s, Quantidade exemplares: %d%n", rs.getInt("id"), rs.getString("titulo"), rs.getInt("qtd_exemplares"));
-            } else {
-                System.out.println("Item não encontrado!");
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public int emprestarItem(int id) {
-        boolean status = getItem(id);
-        if (!status) {
-            System.out.println("Item não encontrado!");
-            return ITEM_NAO_ENCONTRADO;
-        }
-
-        DatabaseMysql db = new DatabaseMysql();
-        Connection conn = db.getConnection();
-        String sql = "SELECT * FROM acervo WHERE id = " + id;
-
-        try {
-            Statement stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery(sql);
-            if (rs.next()) {
-                int qtd_exemplares = rs.getInt("qtd_exemplares");
-                int emprestados = rs.getInt("emprestados");
-                if (qtd_exemplares > emprestados) {
-                    sql = "UPDATE acervo SET emprestados = " + (emprestados + 1) + " WHERE id = " + id;
-                    stmt.executeUpdate(sql);
-                    return ITEM_EMPRESTADO;
-                } else {
-                    return ITEM_SEM_EXEMPLAR_DISPONIVEL;
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return ITEM_SEM_EXEMPLAR_DISPONIVEL;
     }
 }

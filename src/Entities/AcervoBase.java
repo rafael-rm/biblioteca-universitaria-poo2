@@ -2,13 +2,10 @@ package Entities;
 
 import Controllers.AcervoControler;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 import Infrastructure.DatabaseMysql;
-import java.sql.Connection;
 
 public class AcervoBase {
     protected int id;
@@ -86,7 +83,7 @@ public class AcervoBase {
         qtd_exemplares = scan.nextInt();
 
         if (id == 0) {
-            id = controller.getIdCounter();
+            id = AcervoBase.getIdCounter();
             id++;
         }
 
@@ -186,6 +183,101 @@ public class AcervoBase {
             System.out.print(autores.get(i).getNome() + " " + i+1+ ". ");
         }
         System.out.printf("\n%s - %d Edição - %s : %s, %d", getTitulo(), getEdicao(), getCidade(), getEditora(), getAno());
+    }
+
+    public static boolean getItem (int id){
+        DatabaseMysql db = new DatabaseMysql();
+        Connection conn = db.getConnection();
+        String sql = "SELECT * FROM acervo WHERE id = " + id;
+        try {
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+            if (rs.next()) {
+                return true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public static void pesquisarItem (int id) {
+        DatabaseMysql db = new DatabaseMysql();
+        Connection conn = db.getConnection();
+        String sql = "SELECT * FROM acervo WHERE id = " + id;
+        try {
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+            if (rs.next()) {
+                System.out.printf("ID: %d, Nome: %s, Quantidade exemplares: %d%n", rs.getInt("id"), rs.getString("titulo"), rs.getInt("qtd_exemplares"));
+            } else {
+                System.out.println("Item não encontrado!");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static int getIdCounter() {
+        DatabaseMysql db = new DatabaseMysql();
+        Connection conn = db.getConnection();
+        String sql = "SELECT MAX(id) FROM acervo";
+        int idCounter = 0;
+        try {
+            var stmt = conn.prepareStatement(sql);
+            var rs = stmt.executeQuery();
+            while (rs.next()) {
+                idCounter = rs.getInt(1);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return idCounter;
+    }
+
+    public static boolean removerAcervo(int id){
+        DatabaseMysql db = new DatabaseMysql();
+        Connection conn = db.getConnection();
+        String sql = "DELETE FROM acervo WHERE id = '" + id + "';";
+        try {
+            var stmt = conn.prepareStatement(sql);
+            var rs = stmt.executeUpdate();
+            return rs != 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public static int emprestarItem(int id) {
+        boolean status = getItem(id);
+        if (!status) {
+            System.out.println("Item não encontrado!");
+            return AcervoControler.ITEM_NAO_ENCONTRADO;
+        }
+
+        DatabaseMysql db = new DatabaseMysql();
+        Connection conn = db.getConnection();
+        String sql = "SELECT * FROM acervo WHERE id = " + id;
+
+        try {
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery(sql);
+            if (rs.next()) {
+                int qtd_exemplares = rs.getInt("qtd_exemplares");
+                int emprestados = rs.getInt("emprestados");
+                if (qtd_exemplares > emprestados) {
+                    sql = "UPDATE acervo SET emprestados = " + (emprestados + 1) + " WHERE id = " + id;
+                    stmt.executeUpdate(sql);
+                    return AcervoControler.ITEM_EMPRESTADO;
+                } else {
+                    return AcervoControler.ITEM_SEM_EXEMPLAR_DISPONIVEL;
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return AcervoControler.ITEM_SEM_EXEMPLAR_DISPONIVEL;
     }
 
     public void setId(int id) {
