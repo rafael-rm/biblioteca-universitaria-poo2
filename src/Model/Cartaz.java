@@ -1,10 +1,7 @@
-package Entities;
+package Model;
 
-import Controllers.AcervoControler;
 import Infrastructure.DatabaseMysql;
 
-import javax.sound.midi.Soundbank;
-import javax.swing.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

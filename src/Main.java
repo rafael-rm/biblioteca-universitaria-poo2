@@ -1,11 +1,7 @@
 import Controllers.AcervoControler;
 import Controllers.AuthenticationController;
-import Entities.AcervoBase;
-import Entities.Documento;
-import Entities.Utils;
-import Infrastructure.DatabaseMysql;
-import java.sql.Connection;
-import java.util.List;
+import Model.AcervoBase;
+
 import java.util.Scanner;
 import static Others.Menu.*;
 

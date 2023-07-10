@@ -1,12 +1,7 @@
 package Controllers;
-import Entities.*;
-import Infrastructure.DatabaseMysql;
+import Model.*;
 import Others.Menu;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;

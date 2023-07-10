@@ -1,4 +1,4 @@
-package Entities;
+package Model;
 
 import Controllers.AcervoControler;
 
