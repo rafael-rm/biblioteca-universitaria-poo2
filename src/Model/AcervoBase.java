@@ -9,9 +9,10 @@ import Infrastructure.DatabaseMysql;
 import Views.TelaCadastro;
 
 public class AcervoBase {
+    protected String tipoAcervo;
     protected int id;
     protected String titulo;
-    protected ArrayList<Autor> autores;
+    protected String autor;
     protected int edicao;
     protected String cidade;
     protected String editora;
@@ -27,7 +28,7 @@ public class AcervoBase {
     public AcervoBase() {
         id = 0;
         titulo = "Default";
-        autores = new ArrayList<Autor>();
+        autor = "Default";
         edicao = 0;
         cidade = "Default";
         editora = "Default";
@@ -52,11 +53,6 @@ public class AcervoBase {
         titulo = scan.nextLine();
         System.out.println("Digite a quantidade de autores: ");
         qtdAutores = scan.nextInt();
-        for (int i = 0; i < qtdAutores; i++) {
-            Autor autor = new Autor();
-            autor.cadastrar();
-            autores.add(autor);
-        }
         System.out.println("Digite a edição: ");
         scan = new Scanner(System.in);
         edicao = scan.nextInt();
@@ -102,8 +98,9 @@ public class AcervoBase {
 
     public void inserirNoBanco(AcervoBase acervo){
         DatabaseMysql db = new DatabaseMysql();
-        String sql = "INSERT INTO acervo (id, titulo, edicao, cidade, editora, ano, cdu, assunto, palavras_chave, qtd_exemplares, emprestados) VALUES (" +
+        String sql = "INSERT INTO acervo (id, tipo, titulo, edicao, cidade, editora, ano, cdu, assunto, palavras_chave, qtd_exemplares, emprestados) VALUES (" +
                 acervo.getId() + ", '" +
+                acervo.getTipoAcervo() + "', '" +
                 acervo.getTitulo() + "', " +
                 acervo.getEdicao() + ", '" +
                 acervo.getCidade() + "', '" +
@@ -164,10 +161,7 @@ public class AcervoBase {
         System.out.println("ID: " + id);
         System.out.println("Título: " + titulo);
         System.out.println("Autores: ");
-        for (int i = 0; i < autores.size(); i++) {
-            System.out.println("Nome: " + autores.get(i).getNome());
-            System.out.println("Data de nascimento: " + autores.get(i).getDataNascimento());
-        }
+
         System.out.println("Edição: " + edicao);
         System.out.println("Cidade: " + cidade);
         System.out.println("Editora: " + editora);
@@ -184,10 +178,6 @@ public class AcervoBase {
 
     public void imprimirFicha(){
         System.out.println("-----------------------------------------------------------------------------------------");
-        for (int i = 0; i < autores.size(); i++) {
-            System.out.print(autores.get(i).getNome() + " " + i+1+ ". ");
-        }
-        System.out.printf("\n%s - %d Edição - %s : %s, %d", getTitulo(), getEdicao(), getCidade(), getEditora(), getAno());
     }
 
     public static boolean getItem (int id){
@@ -289,12 +279,12 @@ public class AcervoBase {
         this.id = id;
     }
 
-    public ArrayList<Autor> getAutores() {
-        return autores;
+    public String getAutor() {
+        return autor;
     }
 
-    public void setAutores(ArrayList<Autor> autores) {
-        this.autores = autores;
+    public void setAutor(String autor) {
+        this.autor = autor;
     }
 
     public String getTitulo() {
@@ -323,6 +313,14 @@ public class AcervoBase {
 
     public String getEditora() {
         return editora;
+    }
+
+    public String getTipoAcervo() {
+        return tipoAcervo;
+    }
+
+    public void setTipoAcervo(String tipoAcervo) {
+        this.tipoAcervo = tipoAcervo;
     }
 
     public void setEditora(String editora) {

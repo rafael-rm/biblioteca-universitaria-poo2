@@ -1,11 +1,13 @@
 package Views;
 
 import Controllers.AcervoControler;
+import Model.AcervoBase;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Objects;
 
 public class TelaCadastro extends JFrame{
     private JPanel Cadastro;
@@ -33,49 +35,24 @@ public class TelaCadastro extends JFrame{
     private JButton btnCadastro;
 
     public void cadastro(){
-        String titulo = textTitulo.getText();
-        String autor = textFieldAutor.getText();
-        String assunto = textAssunto.getText();
-        String palavrasChaves = textFieldPc.getText();
-        String cdu = fTextCdu.getText();
-        String editora = textEditora.getText();
-        String cidade = textCidade.getText();
-        String ano = fTextFieldAno.getText();
-
-        String tipo;
-
-        switch (cbTipo.getSelectedIndex.){
-            case 0:
-                tipo = "Livro";
-
-            case 1:
-                tipo =  "Cartaz";
-
-            case 2:
-                tipo = "Relatorio";
-
-            case 3:
-                tipo = "Periodico";
-
-            case 4:
-                tipo = "Midia";
-
-            case 5:
-                tipo =  "Tcc";
-
-            case 6:
-                tipo = "Mapa";
-
-            default:
-                tipo = "Livro";
-        }
-
+        AcervoBase item = new AcervoBase();
+        item.setTitulo(textTitulo.getText());
+        item.setAutor(textFieldAutor.getText());
+        item.setAssunto(textAssunto.getText());
+        item.setPalavras_chave_string(textFieldPc.getText());
+        item.setCdu(fTextCdu.getText());
+        item.setEditora(textEditora.getText());
+        item.setCidade(textCidade.getText());
+        item.setAno(Integer.parseInt(fTextFieldAno.getText()));
+        item.setTipoAcervo(Objects.requireNonNull(cbTipo.getSelectedItem()).toString());
+        int id = AcervoBase.getIdCounter();
+        id++;
+        item.setId(id);
+        item.inserirNoBanco(item);
     }
     public TelaCadastro() {
         setContentPane(Cadastro);
         setMinimumSize(new Dimension(700, 500));
-
-
         btnCadastro.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
