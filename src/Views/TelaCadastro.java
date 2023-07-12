@@ -32,7 +32,46 @@ public class TelaCadastro extends JFrame{
     private JLabel JLabelTipo;
     private JButton btnCadastro;
 
-    public TelaCadastro(){
+    public void cadastro(){
+        String titulo = textTitulo.getText();
+        String autor = textFieldAutor.getText();
+        String assunto = textAssunto.getText();
+        String palavrasChaves = textFieldPc.getText();
+        String cdu = fTextCdu.getText();
+        String editora = textEditora.getText();
+        String cidade = textCidade.getText();
+        String ano = fTextFieldAno.getText();
+
+        String tipo;
+
+        switch (cbTipo.getSelectedIndex.){
+            case 0:
+                tipo = "Livro";
+
+            case 1:
+                tipo =  "Cartaz";
+
+            case 2:
+                tipo = "Relatorio";
+
+            case 3:
+                tipo = "Periodico";
+
+            case 4:
+                tipo = "Midia";
+
+            case 5:
+                tipo =  "Tcc";
+
+            case 6:
+                tipo = "Mapa";
+
+            default:
+                tipo = "Livro";
+        }
+
+    }
+    public TelaCadastro() {
         setContentPane(Cadastro);
         setMinimumSize(new Dimension(700, 500));
 
@@ -40,11 +79,9 @@ public class TelaCadastro extends JFrame{
         btnCadastro.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                cadastro();
             }
         });
     }
-
-
 
 }
