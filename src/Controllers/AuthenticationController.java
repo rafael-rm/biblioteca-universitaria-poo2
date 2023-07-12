@@ -5,10 +5,10 @@ import Infrastructure.DatabaseMysql;
 import java.sql.*;
 import java.util.Objects;
 import java.util.Scanner;
-
+import javax.swing.JOptionPane;
 public class AuthenticationController {
 
-    public static boolean login(String login, String senha) {
+    public static boolean  login(String login, String senha) {
         DatabaseMysql db = new DatabaseMysql();
         Connection conn = db.getConnection();
         String sql = "SELECT * FROM usuarios WHERE login = '" + login + "' AND senha = '" + senha + "';";
@@ -16,11 +16,12 @@ public class AuthenticationController {
             Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery(sql);
             if (rs.next()) {
-                return true;
+               return true;
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return false;
+
     }
 }

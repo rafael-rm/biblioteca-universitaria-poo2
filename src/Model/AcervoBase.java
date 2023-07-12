@@ -6,6 +6,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 import Infrastructure.DatabaseMysql;
+import Views.TelaCadastro;
 
 public class AcervoBase {
     protected int id;
@@ -21,6 +22,7 @@ public class AcervoBase {
     protected String palavras_chave_string;
     protected int qtd_exemplares;
     protected int emprestados;
+
 
     public AcervoBase() {
         id = 0;
@@ -38,7 +40,10 @@ public class AcervoBase {
         emprestados = 0;
     }
 
+    private TelaCadastro tc;
+
     public void cadastrar(){
+
         Scanner scan = new Scanner(System.in);
         AcervoControler controller = AcervoControler.getInstance("prod");
         int qtdAutores, qtdPalavrasChave;
@@ -91,7 +96,7 @@ public class AcervoBase {
         for (int i = 0; i < palavras_chave.size(); i++) {
             palavras_chave_string += palavras_chave.get(i);
             if (i != palavras_chave.size() - 1)
-                palavras_chave_string += ", ";
+                palavras_chave_string +=" , ";
         }
     }
 

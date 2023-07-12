@@ -1,22 +1,44 @@
 import Controllers.AcervoControler;
 import Controllers.AuthenticationController;
 import Model.AcervoBase;
-
+import Views.TelaCadastro;
+import Views.TelaLogin;
+import javax.swing.UIManager;
+import javax.swing.UIManager.LookAndFeelInfo;
+import javax.swing.UnsupportedLookAndFeelException;
 import java.util.Scanner;
 import static Others.Menu.*;
 
+
 public class Main {
+
+    public static void temaTelas(){
+        try {
+            for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (UnsupportedLookAndFeelException e) {
+            // handle exception
+        } catch (ClassNotFoundException e) {
+            // handle exception
+        } catch (InstantiationException e) {
+            // handle exception
+        } catch (IllegalAccessException e) {
+            // handle exception
+        }
+    }
+
     public static void main(String[] args) {
 
         AcervoControler controllerAc = AcervoControler.getInstance("prod");
 
-        boolean test = AuthenticationController.login("rafae3123l", "rafael123");
-        if (test) {
-            System.out.println("Login efetuado com sucesso!");
-        } else {
-            System.out.println("Login ou senha incorretos!");
-        }
+        temaTelas();
 
+        TelaLogin tl = new TelaLogin(null);
+        tl.setVisible(true);
 
         int opcao, subOpcao, id, status2;
         Scanner sc;
