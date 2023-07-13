@@ -1,4 +1,5 @@
 import Views.TelaLogin;
+import Views.TelaUpdate;
 import Views.TelasSettings;
 
 

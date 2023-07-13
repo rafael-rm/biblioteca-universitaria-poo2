@@ -8,40 +8,42 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Objects;
 
-public class TelaCadastro extends JFrame{
-    private JPanel Cadastro;
-    public JTextField textTitulo;
+public class TelaUpdate extends JFrame{
     private JLabel JLTitulo;
+    private JTextField textTitulo;
+    private JLabel JLabelAssunto;
+    private JTextField textAssunto;
+    private JLabel JLabelPc;
+    private JTextField textFieldPc;
+    private JLabel JLabelCdu;
+    private JFormattedTextField fTextCdu;
     private JTextField textFieldAutor;
     private JLabel JLabelAutor;
-    public JTextField textAssunto;
-    private JTextField textFieldPc;
-    private JLabel JLabelAssunto;
-    private JLabel JLabelPc;
-    public JFormattedTextField fTextCdu;
-    private JLabel JLabelCdu;
+    private JLabel JLabelQtExemplares;
+    private JTextField textQtExemplares;
     private JPanel Cadastro2;
-    private JLabel JLabelEditora;
-    public JTextField textEditora;
-    private javax.swing.JLabel JLabelCidade;
-    public JTextField textCidade;
+    private JTextField textEditora;
     private JLabel JLabelAno;
+    private JLabel JLabelEditora;
+    private JTextField textCidade;
     private JFormattedTextField fTextFieldAno;
-    private JLabel JLabelCad;
-    private JLabel JLabelimg;
-    public JComboBox cbTipo;
-    private JLabel JLabelTipo;
-    private JButton btnCadastro;
     private JLabel JLabelEdicao;
     private JTextField textEdicao;
     private JLabel JLabelQt;
     private JTextField textQt;
     private JLabel JLabelTam;
     private JTextField textTam;
-    private JLabel JLabelQtExemplares;
-    private JTextField textQtExemplares;
+    private JLabel JLabelCidade;
+    private JLabel JLabelTipo;
+    private JComboBox cbTipo;
+    private JButton btnAtualizar;
+    private JPanel Editar;
+    private javax.swing.JLabel JLabel;
+    private JLabel JLabelimg;
+    private JLabel JLabelid;
+    private JTextField textId;
 
-    public void cadastro(){
+    public void atualizar(){
         AcervoBase item = new AcervoBase();
         item.setTitulo(textTitulo.getText());
         item.setAutor(textFieldAutor.getText());
@@ -54,20 +56,18 @@ public class TelaCadastro extends JFrame{
         item.setEdicao(Integer.parseInt(textEdicao.getText()));
         item.setQtd_exemplares(Integer.parseInt(textQtExemplares.getText()));
         item.setTipoAcervo(Objects.requireNonNull(cbTipo.getSelectedItem()).toString());
-        int id = AcervoBase.getIdCounter();
-        id++;
-        item.setId(id);
-        item.inserirNoBanco(item);
+        item.setId(Integer.parseInt(textId.getText()));
+        item.atualizarNoBanco(item, item.getId());
     }
-    public TelaCadastro() {
-        setContentPane(Cadastro);
+
+    public TelaUpdate (){
+        setContentPane(Editar);
         setMinimumSize(new Dimension(700, 500));
-        btnCadastro.addActionListener(new ActionListener() {
+        btnAtualizar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                cadastro();
+                atualizar();
             }
         });
     }
-
 }

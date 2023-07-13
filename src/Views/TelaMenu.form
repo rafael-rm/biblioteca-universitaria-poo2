@@ -31,6 +31,7 @@
           <model>
             <item value="Listar acervo"/>
             <item value="Cadastrar item"/>
+            <item value="Editar item"/>
           </model>
         </properties>
       </component>

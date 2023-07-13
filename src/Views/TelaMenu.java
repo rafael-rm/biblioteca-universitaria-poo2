@@ -32,6 +32,11 @@ public class TelaMenu extends JFrame {
                         tc.setVisible(true);
                         break;
 
+                    case 2:
+                        TelaUpdate tup = new TelaUpdate();
+                        dispose();
+                        tup.setVisible(true);
+
                 }
             }
         });
