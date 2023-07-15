@@ -38,28 +38,15 @@ public class AcervoControler {
         return instance;
     }
 
-    public static void cadastrarAcervo(){
-        AcervoControler controller = AcervoControler.getInstance("prod");
-        int opcao = Menu.menuCadastrar();
-        if (opcao == 0) return;
-
-        new AcervoBase();
-        int selectedIndex = tc.cbTipo.getSelectedIndex();
-        //AcervoBase item = switch (tc.cbTipo.getSelectedIndex()) {
-        AcervoBase item = switch(selectedIndex){
-            case 0-> new Livro();
-            case 1 -> new Mapa();
-            case 2 -> new Periodico();
-            case 3 -> new Tcc();
-            case 4 -> new Relatorio();
-            case 5 -> new Cartaz();
-            case 6 -> new Midia();
-            default -> throw new IllegalStateException("Unexpected value: " + opcao);
-        };
-        item.cadastrar();
-        item.inserirNoBanco(item);
-        controller.listAcervos.add(item);
-        System.out.println("Item cadastrado com sucesso!");
+    public static boolean cadastrarAcervo(AcervoBase item){
+        try {
+            int id = AcervoBase.getNextId();
+            item.setId(id);
+            item.inserirNoBanco(item);
+            return true;
+        } catch (Exception e){
+            return false;
+        }
     }
 
     public boolean removerAcervo(int id){

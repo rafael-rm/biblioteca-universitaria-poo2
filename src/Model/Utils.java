@@ -72,6 +72,9 @@ public class Utils {
                 acervo.setPalavras_chave_string(rs.getString("palavras_chave"));
                 acervo.setQtd_exemplares(rs.getInt("qtd_exemplares"));
                 acervo.setEmprestados(rs.getInt("emprestados"));
+                acervo.setTam_pag(rs.getInt("tam_pag"));
+                acervo.setNum_pag(rs.getInt("num_pag"));
+                acervo.setTipoAcervo(rs.getString("tipo"));
                 acervos.add(acervo);
             }
         } catch (SQLException e) {

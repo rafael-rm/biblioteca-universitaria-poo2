@@ -23,6 +23,8 @@ public class AcervoBase {
     protected String palavras_chave_string;
     protected int qtd_exemplares;
     protected int emprestados;
+    protected int num_pag;
+    protected float tam_pag;
 
 
     public AcervoBase() {
@@ -98,7 +100,7 @@ public class AcervoBase {
 
     public void inserirNoBanco(AcervoBase acervo){
         DatabaseMysql db = new DatabaseMysql();
-        String sql = "INSERT INTO acervo (id, tipo, titulo, edicao, cidade, editora, ano, cdu, assunto, palavras_chave, qtd_exemplares, emprestados) VALUES (" +
+        String sql = "INSERT INTO acervo (id, tipo, titulo, edicao, cidade, editora, ano, cdu, assunto, palavras_chave, qtd_exemplares, tam_pag, num_pag, emprestados) VALUES (" +
                 acervo.getId() + ", '" +
                 acervo.getTipoAcervo() + "', '" +
                 acervo.getTitulo() + "', " +
@@ -110,6 +112,8 @@ public class AcervoBase {
                 acervo.getAssunto() + "', '" +
                 acervo.getPalavras_chave_string() + "', " +
                 acervo.getQtd_exemplares() + ", " +
+                acervo.getTam_pag() + ", " +
+                acervo.getNum_pag() + ", " +
                 acervo.getEmprestados() + ");";
         db.execute(sql);
     }
@@ -127,6 +131,8 @@ public class AcervoBase {
                 "palavras_chave = '" + acervo.getPalavras_chave_string() + "', " +
                 "qtd_exemplares = " + acervo.getQtd_exemplares() + ", " +
                 "emprestados = " + acervo.getEmprestados() + " " +
+                "tam_pag = " + acervo.getTam_pag() + " " +
+                "num_pag = " + acervo.getNum_pag() + " " +
                 "WHERE id = " + id + ";";
         db.execute(sql);
     }
@@ -150,6 +156,8 @@ public class AcervoBase {
                 acervo.setPalavras_chave_string(rs.getString("palavras_chave"));
                 acervo.setQtd_exemplares(rs.getInt("qtd_exemplares"));
                 acervo.setEmprestados(rs.getInt("emprestados"));
+                acervo.setTam_pag(rs.getInt("tam_pag"));
+                acervo.setNum_pag(rs.getInt("num_pag"));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -228,6 +236,10 @@ public class AcervoBase {
             e.printStackTrace();
         }
         return idCounter;
+    }
+
+    public static int getNextId() {
+        return getIdCounter() + 1;
     }
 
     public static boolean removerAcervo(int id){
@@ -387,4 +399,19 @@ public class AcervoBase {
         return id;
     }
 
+    public int getNum_pag() {
+        return num_pag;
+    }
+
+    public void setNum_pag(int num_pag) {
+        this.num_pag = num_pag;
+    }
+
+    public float getTam_pag() {
+        return tam_pag;
+    }
+
+    public void setTam_pag(float tam_pag) {
+        this.tam_pag = tam_pag;
+    }
 }

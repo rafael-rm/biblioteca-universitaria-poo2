@@ -1,5 +1,6 @@
 package Views;
 
+import Controllers.AcervoControler;
 import Model.AcervoBase;
 
 import javax.swing.*;
@@ -54,11 +55,17 @@ public class TelaCadastro extends JFrame{
         item.setEdicao(Integer.parseInt(textEdicao.getText()));
         item.setQtd_exemplares(Integer.parseInt(textQtExemplares.getText()));
         item.setTipoAcervo(Objects.requireNonNull(cbTipo.getSelectedItem()).toString());
-        int id = AcervoBase.getIdCounter();
-        id++;
-        item.setId(id);
-        item.inserirNoBanco(item);
+        item.setTam_pag(Integer.parseInt(textTam.getText()));
+        item.setNum_pag(Integer.parseInt(textQt.getText()));
+
+        boolean status = AcervoControler.cadastrarAcervo(item);
+
+        if (status)
+            JOptionPane.showMessageDialog(null, "Cadastro realizado com sucesso!");
+        else
+            JOptionPane.showMessageDialog(null, "Erro ao cadastrar!");
     }
+
     public TelaCadastro() {
         setContentPane(Cadastro);
         setMinimumSize(new Dimension(700, 500));
