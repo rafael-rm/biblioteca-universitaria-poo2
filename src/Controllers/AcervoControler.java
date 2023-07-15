@@ -6,6 +6,7 @@ import Views.TelaCadastro;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.Vector;
 
 import static Others.Menu.LISTAR_LIVROS;
 import static Others.Menu.LISTAR_TODOS_ITENS;
@@ -83,129 +84,16 @@ public class AcervoControler {
         return true;
     }
 
-    public void listarAcervo() {
-        AcervoControler controller = AcervoControler.getInstance("prod");
-        Scanner sc = new Scanner(System.in);
-        int opcao = Menu.menuListar();
-        if (opcao == 0) return;
-
+    public static Vector<String> listarAcervo(String tipo) {
         List<AcervoBase> listAcervos = Utils.obterTodosDoBanco();
 
-        if (listAcervos.isEmpty()) {
-            System.out.println("Não há itens cadastrados!");
-            System.out.println("Pressione enter para continuar...");
-            sc.nextLine();
-            return;
+        Vector<String> listaAc = new Vector<>();
+
+        for (AcervoBase acervo : listAcervos) {
+            String temp = acervo.getId() + "  -  " + acervo.getTipoAcervo() + "  -  " + acervo.getTitulo();
+            listaAc.add(temp);
         }
 
-        int count = 0;
-        switch (opcao) {
-            case LISTAR_TODOS_ITENS -> {
-                for (AcervoBase item : listAcervos) {
-                    System.out.printf("ID: %d, Nome: %s, Quantidade exemplares: %d%n", item.getId(), item.getTitulo(), item.getQtd_exemplares());
-                }
-                System.out.println("Pressione enter para continuar...");
-                sc.nextLine();
-            }
-            case LISTAR_LIVROS -> {
-                for (AcervoBase item : listAcervos) {
-                    if (item instanceof Livro) {
-                        count++;
-                        System.out.printf("ID: %d, Nome: %s, Quantidade exemplares: %d%n", item.getId(), item.getTitulo(), item.getQtd_exemplares());
-                    }
-                }
-
-                if (count == 0)
-                    System.out.println("Não há livros cadastrados!");
-
-                System.out.println("Pressione enter para continuar...");
-                sc.nextLine();
-            }
-            case Menu.LISTAR_MAPAS -> {
-                for (AcervoBase item : listAcervos) {
-                    if (item instanceof Mapa) {
-                        count++;
-                        System.out.printf("ID: %d, Nome: %s, Quantidade exemplares: %d%n", item.getId(), item.getTitulo(), item.getQtd_exemplares());
-                    }
-                }
-
-                if (count == 0)
-                    System.out.println("Não há mapas cadastrados!");
-
-                System.out.println("Pressione enter para continuar...");
-                sc.nextLine();
-            }
-            case Menu.LISTAR_PERIODICOS -> {
-                for (AcervoBase item : listAcervos) {
-                    if (item instanceof Periodico) {
-                        count++;
-                        System.out.printf("ID: %d, Nome: %s, Quantidade exemplares: %d%n", item.getId(), item.getTitulo(), item.getQtd_exemplares());
-                    }
-                }
-
-                if (count == 0)
-                    System.out.println("Não há periódicos cadastrados!");
-
-                System.out.println("Pressione enter para continuar...");
-                sc.nextLine();
-            }
-            case Menu.LISTAR_TCCS -> {
-                for (AcervoBase item : listAcervos) {
-                    if (item instanceof Tcc) {
-                        count++;
-                        System.out.printf("ID: %d, Nome: %s, Quantidade exemplares: %d%n", item.getId(), item.getTitulo(), item.getQtd_exemplares());
-                    }
-                }
-
-                if (count == 0)
-                    System.out.println("Não há TCCs cadastrados!");
-
-                System.out.println("Pressione enter para continuar...");
-                sc.nextLine();
-            }
-            case Menu.LISTAR_RELATORIOS -> {
-                for (AcervoBase item : listAcervos) {
-                    if (item instanceof Relatorio) {
-                        count++;
-                        System.out.printf("ID: %d, Nome: %s, Quantidade exemplares: %d%n", item.getId(), item.getTitulo(), item.getQtd_exemplares());
-                    }
-                }
-
-                if (count == 0)
-                    System.out.println("Não há relatórios cadastrados!");
-
-                System.out.println("Pressione enter para continuar...");
-                sc.nextLine();
-            }
-            case Menu.LISTAR_CARTAZES -> {
-                for (AcervoBase item : listAcervos) {
-                    if (item instanceof Cartaz) {
-                        count++;
-                        System.out.printf("ID: %d, Nome: %s, Quantidade exemplares: %d%n", item.getId(), item.getTitulo(), item.getQtd_exemplares());
-                    }
-                }
-
-                if (count == 0)
-                    System.out.println("Não há cartazes cadastrados!");
-
-                System.out.println("Pressione enter para continuar...");
-                sc.nextLine();
-            }
-            case Menu.LISTAR_MIDIAS -> {
-                for (AcervoBase item : listAcervos) {
-                    if (item instanceof Midia) {
-                        count++;
-                        System.out.printf("ID: %d, Nome: %s, Quantidade exemplares: %d%n", item.getId(), item.getTitulo(), item.getQtd_exemplares());
-                    }
-                }
-
-                if (count == 0)
-                    System.out.println("Não há mídias cadastradas!");
-
-                System.out.println("Pressione enter para continuar...");
-                sc.nextLine();
-            }
-            default -> throw new IllegalStateException("Unexpected value: " + opcao);
-        }
+        return listaAc;
     }
 }
