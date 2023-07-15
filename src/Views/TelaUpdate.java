@@ -1,5 +1,6 @@
 package Views;
 
+import Controllers.AcervoControler;
 import Model.AcervoBase;
 
 import javax.swing.*;
@@ -45,6 +46,7 @@ public class TelaUpdate extends JFrame{
 
     public void atualizar(){
         AcervoBase item = new AcervoBase();
+
         item.setTitulo(textTitulo.getText());
         item.setAutor(textFieldAutor.getText());
         item.setAssunto(textAssunto.getText());
@@ -57,7 +59,13 @@ public class TelaUpdate extends JFrame{
         item.setQtd_exemplares(Integer.parseInt(textQtExemplares.getText()));
         item.setTipoAcervo(Objects.requireNonNull(cbTipo.getSelectedItem()).toString());
         item.setId(Integer.parseInt(textId.getText()));
-        item.atualizarNoBanco(item, item.getId());
+
+        boolean status = AcervoControler.editarAcervo(item);
+
+        if (status)
+            JOptionPane.showMessageDialog(null, "Item atualizado com sucesso!");
+        else
+            JOptionPane.showMessageDialog(null, "Erro ao atualizar item!");
     }
 
     public TelaUpdate (){

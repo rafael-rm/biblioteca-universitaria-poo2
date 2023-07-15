@@ -66,14 +66,12 @@ public class AcervoControler {
         return AcervoBase.removerAcervo(id);
     }
 
-    public boolean editarAcervo(int id){
-        boolean status = AcervoBase.getItem(id);
+    public static boolean editarAcervo(AcervoBase item){
+        boolean status = AcervoBase.getItem(item.getId());
 
         if (!status) return false;
 
-        AcervoBase item = new AcervoBase();
-        item.cadastrar();
-        item.atualizarNoBanco(item, id);
+        item.atualizarNoBanco(item, item.getId());
         return true;
     }
 
