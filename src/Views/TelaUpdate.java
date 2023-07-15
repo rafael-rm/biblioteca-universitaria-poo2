@@ -39,7 +39,7 @@ public class TelaUpdate extends JFrame{
     private JComboBox cbTipo;
     private JButton btnAtualizar;
     private JPanel Editar;
-    private javax.swing.JLabel JLabel;
+    private javax.swing.JLabel JLabelEdit;
     private JLabel JLabelimg;
     private JLabel JLabelid;
     private JTextField textId;

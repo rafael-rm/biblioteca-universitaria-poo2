@@ -60,7 +60,7 @@ public class Utils {
             PreparedStatement ps = conn.prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             while (rs.next()){
-                AcervoBase acervo = (AcervoBase) getTipo(rs.getInt("id"));
+                AcervoBase acervo = new AcervoBase();
                 acervo.setId(rs.getInt("id"));
                 acervo.setTitulo(rs.getString("titulo"));
                 acervo.setEdicao(rs.getInt("edicao"));
