@@ -43,18 +43,10 @@ public class TelaFicha extends JFrame {
                 AcervoBase item = new AcervoBase();
 
                 int id = (Integer.parseInt(textId.getText()));
-                item.setId(8);
-                System.out.println(item.getId());
-                if(id == item.getId()){
 
-                    autor.setText(item.getAutor());
-                    titulo.setText("Ola");
-                    cidade.setText("Divi");
+                item = AcervoControler.buscarAcervo(id);
 
-
-                }
-
-
+                autor.setText(item.getTitulo());
             }
         });
     }

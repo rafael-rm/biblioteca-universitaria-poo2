@@ -35,21 +35,26 @@ public class TelaItensAcervo extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 int id = list.getSelectedIndex();
                 String item = list.getModel().getElementAt(id);
-                System.out.println(item);
 
-//                boolean status = AcervoControler.removerAcervo();
-//                if(status) {
-//                    JOptionPane.showMessageDialog(null, "Item removido com sucesso!");
-//                }else{
-//                    JOptionPane.showMessageDialog(null, "Erro ao remover!");
-//                }
+                int posicaoAbertura = item.indexOf("[");
+                int posicaoFechamento = item.indexOf("]");
+
+                int idAc = Integer.parseInt(item.substring(posicaoAbertura + 1, posicaoFechamento));
+
+                boolean status = AcervoControler.removerAcervo(idAc);
+                if(status) {
+                    JOptionPane.showMessageDialog(null, "Item removido com sucesso!");
+                }else{
+                    JOptionPane.showMessageDialog(null, "Erro ao remover!");
+                }
             }
         });
 
         btnAtualizar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String tipo = "Acervo";
+                int index = comboBox1.getSelectedIndex();
+                String tipo = (String) comboBox1.getItemAt(index);
                 Vector<String> lista = AcervoControler.listarAcervo(tipo);
                 list.setListData(lista);
             }
@@ -57,6 +62,22 @@ public class TelaItensAcervo extends JFrame {
         btnEmprestar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                int id = list.getSelectedIndex();
+                String item = list.getModel().getElementAt(id);
+
+                int posicaoAbertura = item.indexOf("[");
+                int posicaoFechamento = item.indexOf("]");
+
+                int idAc = Integer.parseInt(item.substring(posicaoAbertura + 1, posicaoFechamento));
+
+                int status = AcervoControler.emprestar(idAc);
+                if(status == AcervoControler.ITEM_EMPRESTADO) {
+                    JOptionPane.showMessageDialog(null, "Item emprestado com sucesso!");
+                }else if (status == AcervoControler.ITEM_NAO_ENCONTRADO){
+                    JOptionPane.showMessageDialog(null, "Item não encontrado!");
+                }else if (status == AcervoControler.ITEM_SEM_EXEMPLAR_DISPONIVEL){
+                    JOptionPane.showMessageDialog(null, "Item sem exemplares disponiveis!");
+                }
             }
         });
         btnListar.addActionListener(new ActionListener() {
@@ -64,15 +85,16 @@ public class TelaItensAcervo extends JFrame {
             public void actionPerformed(ActionEvent e) {
                 int index = comboBox1.getSelectedIndex();
                 String tipo = (String) comboBox1.getItemAt(index);
-                System.out.println(tipo);
-
                 Vector<String> lista = AcervoControler.listarAcervo(tipo);
+
+                if (lista.isEmpty()){
+                    JOptionPane.showMessageDialog(null, "Não há itens cadastrados do tipo selecionado!");
+                }
+
                 list.setListData(lista);
-
-
-
             }
         });
+
         btnVoltar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

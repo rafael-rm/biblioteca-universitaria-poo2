@@ -69,9 +69,4 @@ public class Livro extends Documento {
         this.isbn = isbn;
     }
 
-    @Override
-    public void imprimirFicha(){
-        super.imprimirFicha();
-        System.out.printf("\nISBN: %s", getIsbn());
-    }
 }

@@ -1,6 +1,5 @@
 package Controllers;
 import Model.*;
-import Others.Menu;
 import Views.TelaCadastro;
 
 import java.util.ArrayList;
@@ -8,8 +7,6 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.Vector;
 
-import static Others.Menu.LISTAR_LIVROS;
-import static Others.Menu.LISTAR_TODOS_ITENS;
 
 public class AcervoControler {
     public static final int ITEM_EMPRESTADO = 1;
@@ -63,37 +60,85 @@ public class AcervoControler {
         return true;
     }
 
-    public boolean imprimirFichaCatalografica(int id){
-        boolean status = AcervoBase.getItem(id);
-        if (!status) return false;
-
-        var obj = Utils.obterDoBanco(id);
-
-        switch (obj) {
-            case Livro livro -> livro.imprimirFicha();
-            case Mapa mapa -> mapa.imprimirFicha();
-            case Periodico periodico -> periodico.imprimirFicha();
-            case Tcc tcc -> tcc.imprimirFicha();
-            case Relatorio relatorio -> relatorio.imprimirFicha();
-            case Cartaz cartaz -> cartaz.imprimirFicha();
-            case Midia midia -> midia.imprimirFicha();
-            case Documento documento -> documento.imprimirFicha();
-            case AcervoBase acervoBase -> acervoBase.imprimirFicha();
-            default -> throw new IllegalStateException("Unexpected value: " + obj);
-        }
-        return true;
-    }
-
     public static Vector<String> listarAcervo(String tipo) {
         List<AcervoBase> listAcervos = Utils.obterTodosDoBanco();
 
         Vector<String> listaAc = new Vector<>();
 
-        for (AcervoBase acervo : listAcervos) {
-            String temp = acervo.getId() + "  -  " + acervo.getTipoAcervo() + "  -  " + acervo.getTitulo();
-            listaAc.add(temp);
+        if (tipo == null){
+            for (AcervoBase acervo : listAcervos) {
+                String temp = "[" + acervo.getId() + "]" + "  -  " + acervo.getTipoAcervo() + "  -  " + acervo.getTitulo();
+                listaAc.add(temp);
+            }
+            return listaAc;
+        }
+
+        switch (tipo) {
+            case "Livro" -> {
+                for (AcervoBase acervo : listAcervos) {
+                    if (acervo.getTipoAcervo().equals("Livro")) {
+                        String temp = "[" + acervo.getId() + "]" + "  -  " + acervo.getTipoAcervo() + "  -  " + acervo.getTitulo();
+                        listaAc.add(temp);
+                    }
+                }
+            }
+            case "Cartaz" -> {
+                for (AcervoBase acervo : listAcervos) {
+                    if (acervo.getTipoAcervo().equals("Cartaz")) {
+                        String temp = "[" + acervo.getId() + "]" + "  -  " + acervo.getTipoAcervo() + "  -  " + acervo.getTitulo();
+                        listaAc.add(temp);
+                    }
+                }
+            }
+            case "Documento" -> {
+                for (AcervoBase acervo : listAcervos) {
+                    if (acervo.getTipoAcervo().equals("Documento")) {
+                        String temp = "[" + acervo.getId() + "]" + "  -  " + acervo.getTipoAcervo() + "  -  " + acervo.getTitulo();
+                        listaAc.add(temp);
+                    }
+                }
+            }
+            case "Midia" -> {
+                for (AcervoBase acervo : listAcervos) {
+                    if (acervo.getTipoAcervo().equals("Midia")) {
+                        String temp = "[" + acervo.getId() + "]" + "  -  " + acervo.getTipoAcervo() + "  -  " + acervo.getTitulo();
+                        listaAc.add(temp);
+                    }
+                }
+            }
+            case "Tcc" -> {
+                for (AcervoBase acervo : listAcervos) {
+                    if (acervo.getTipoAcervo().equals("Tcc")) {
+                        String temp = "[" + acervo.getId() + "]" + "  -  " + acervo.getTipoAcervo() + "  -  " + acervo.getTitulo();
+                        listaAc.add(temp);
+                    }
+                }
+            }
+            case "Mapa" -> {
+                for (AcervoBase acervo : listAcervos) {
+                    if (acervo.getTipoAcervo().equals("Mapa")) {
+                        String temp = "[" + acervo.getId() + "]" + "  -  " + acervo.getTipoAcervo() + "  -  " + acervo.getTitulo();
+                        listaAc.add(temp);
+                    }
+                }
+            }
+            case "Todos" -> {
+                for (AcervoBase acervo : listAcervos) {
+                    String temp = "[" + acervo.getId() + "]" + "  -  " + acervo.getTipoAcervo() + "  -  " + acervo.getTitulo();
+                    listaAc.add(temp);
+                }
+            }
+
         }
 
         return listaAc;
+    }
+
+    public static int emprestar(int id){
+        return AcervoBase.emprestarItem(id);
+    }
+
+    public static AcervoBase buscarAcervo(int id) {
+        return AcervoBase.obterDoBanco(id);
     }
 }

@@ -47,10 +47,15 @@
         </constraints>
         <properties>
           <model>
-            <item value="Mídia"/>
+            <item value="Todos"/>
+            <item value="Midia"/>
             <item value="Relatório"/>
             <item value="Tcc"/>
             <item value="Documento"/>
+            <item value="Cartaz"/>
+            <item value="Periódico"/>
+            <item value="Livro"/>
+            <item value="Mapa"/>
           </model>
         </properties>
       </component>

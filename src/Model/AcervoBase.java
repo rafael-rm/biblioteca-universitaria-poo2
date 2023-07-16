@@ -100,10 +100,11 @@ public class AcervoBase {
 
     public void inserirNoBanco(AcervoBase acervo){
         DatabaseMysql db = new DatabaseMysql();
-        String sql = "INSERT INTO acervo (id, tipo, titulo, edicao, cidade, editora, ano, cdu, assunto, palavras_chave, qtd_exemplares, tam_pag, num_pag, emprestados) VALUES (" +
+        String sql = "INSERT INTO acervo (id, tipo, titulo, autor, edicao, cidade, editora, ano, cdu, assunto, palavras_chave, qtd_exemplares, tam_pag, num_pag, emprestados) VALUES (" +
                 acervo.getId() + ", '" +
                 acervo.getTipoAcervo() + "', '" +
                 acervo.getTitulo() + "', " +
+                acervo.getAutor() + "', " +
                 acervo.getEdicao() + ", '" +
                 acervo.getCidade() + "', '" +
                 acervo.getEditora() + "', " +
@@ -123,6 +124,7 @@ public class AcervoBase {
         String sql = "UPDATE acervo SET " +
                 "titulo = '" + acervo.getTitulo() + "', " +
                 "edicao = " + acervo.getEdicao() + ", " +
+                "autor = " + acervo.getAutor() + ", " +
                 "cidade = '" + acervo.getCidade() + "', " +
                 "editora = '" + acervo.getEditora() + "', " +
                 "ano = " + acervo.getAno() + ", " +
@@ -137,7 +139,8 @@ public class AcervoBase {
         db.execute(sql);
     }
 
-    public static Object obterDoBanco(int id, AcervoBase acervo){
+    public static AcervoBase obterDoBanco(int id){
+        AcervoBase acervo = new AcervoBase();
         DatabaseMysql db = new DatabaseMysql();
         Connection conn = db.getConnection();
         String sql = "SELECT * FROM acervo WHERE id = " + id + ";";
@@ -147,6 +150,7 @@ public class AcervoBase {
             while (rs.next()){
                 acervo.setId(rs.getInt("id"));
                 acervo.setTitulo(rs.getString("titulo"));
+                acervo.setAutor(rs.getString("autor"));
                 acervo.setEdicao(rs.getInt("edicao"));
                 acervo.setCidade(rs.getString("cidade"));
                 acervo.setEditora(rs.getString("editora"));
@@ -184,10 +188,6 @@ public class AcervoBase {
         System.out.println("Quantidade de exemplares emprestados: " + emprestados);
     }
 
-    public void imprimirFicha(){
-        System.out.println("-----------------------------------------------------------------------------------------");
-    }
-
     public static boolean getItem (int id){
         DatabaseMysql db = new DatabaseMysql();
         Connection conn = db.getConnection();
@@ -202,23 +202,6 @@ public class AcervoBase {
             e.printStackTrace();
         }
         return false;
-    }
-
-    public static void pesquisarItem (int id) {
-        DatabaseMysql db = new DatabaseMysql();
-        Connection conn = db.getConnection();
-        String sql = "SELECT * FROM acervo WHERE id = " + id;
-        try {
-            Statement stmt = conn.createStatement();
-            ResultSet rs = stmt.executeQuery(sql);
-            if (rs.next()) {
-                System.out.printf("ID: %d, Nome: %s, Quantidade exemplares: %d%n", rs.getInt("id"), rs.getString("titulo"), rs.getInt("qtd_exemplares"));
-            } else {
-                System.out.println("Item não encontrado!");
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
     }
 
     public static int getIdCounter() {

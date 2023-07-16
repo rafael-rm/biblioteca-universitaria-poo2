@@ -54,18 +54,6 @@ public class Documento extends AcervoBase {
         System.out.println("Tamanho da página: " + tam_pag);
     }
 
-    @Override
-    public void imprimirFicha(){
-        super.imprimirFicha();
-        System.out.printf("\n%d pág.: %f cm", getNum_pag(), getTam_pag());
-        System.out.printf("\n1. %s. |.",getAssunto());
-        for (int i = 0; i < palavras_chave.size(); i++) {
-            System.out.printf(" %s %d.", palavras_chave.get(i), i+1);
-        }
-
-        System.out.printf("\n\n\t\t\tCDU: %s\n\n", getCdu());
-    }
-
     public static Object obterDoBanco(int id, Documento acervo){
         DatabaseMysql db = new DatabaseMysql();
         Connection conn = db.getConnection();

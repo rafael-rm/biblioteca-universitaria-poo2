@@ -10,19 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Utils {
-    public static Object obterDoBanco(int id){
-        var obj = getTipo(id);
-        return switch (obj) {
-            case Livro livro -> Livro.obterDoBanco(id, livro);
-            case Cartaz cartaz -> Cartaz.obterDoBanco(id, cartaz);
-            case Relatorio relatorio -> Relatorio.obterDoBanco(id, relatorio);
-            case Periodico periodico -> Periodico.obterDoBanco(id, periodico);
-            case Midia midia -> Midia.obterDoBanco(id, midia);
-            case Tcc tcc -> Tcc.obterDoBanco(id, tcc);
-            case Mapa mapa -> Mapa.obterDoBanco(id, mapa);
-            case null, default -> AcervoBase.obterDoBanco(id, (AcervoBase) obj);
-        };
-    }
 
     public static Object getTipo(int id) {
         DatabaseMysql db = new DatabaseMysql();
