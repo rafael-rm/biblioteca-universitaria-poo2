@@ -7,6 +7,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Objects;
 
 public class TelaFicha extends JFrame {
     private JPanel Tela;
@@ -43,7 +44,7 @@ public class TelaFicha extends JFrame {
                 int id = (Integer.parseInt(textId.getText()));
 
                 item = AcervoControler.buscarAcervo(id);
-                if (item != null) {
+                if (!Objects.equals(item.getTitulo(), "Default")) {
 
                     autor.setText(item.getTitulo());
                     titulo.setText(item.getTitulo());
