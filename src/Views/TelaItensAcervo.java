@@ -28,7 +28,7 @@ public class TelaItensAcervo extends JFrame {
     public TelaItensAcervo() {
 
         setContentPane(Itens);
-        setMinimumSize(new Dimension(600, 500));
+        setMinimumSize(new Dimension(700, 700));
 
         btnExcluir.addActionListener(new ActionListener() {
             @Override

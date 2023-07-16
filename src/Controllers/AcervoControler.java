@@ -122,6 +122,14 @@ public class AcervoControler {
                     }
                 }
             }
+            case "Relatório" -> {
+                for (AcervoBase acervo : listAcervos) {
+                    if (acervo.getTipoAcervo().equals("Relatório")) {
+                        String temp = "[" + acervo.getId() + "]" + "  -  " + acervo.getTipoAcervo() + "  -  " + acervo.getTitulo();
+                        listaAc.add(temp);
+                    }
+                }
+            }
             case "Todos" -> {
                 for (AcervoBase acervo : listAcervos) {
                     String temp = "[" + acervo.getId() + "]" + "  -  " + acervo.getTipoAcervo() + "  -  " + acervo.getTitulo();
