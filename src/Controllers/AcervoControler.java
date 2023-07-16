@@ -50,7 +50,7 @@ public class AcervoControler {
         }
     }
 
-    public boolean removerAcervo(int id){
+    public static boolean removerAcervo(int id){
         return AcervoBase.removerAcervo(id);
     }
 

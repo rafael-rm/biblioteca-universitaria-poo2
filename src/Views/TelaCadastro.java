@@ -41,6 +41,7 @@ public class TelaCadastro extends JFrame{
     private JTextField textTam;
     private JLabel JLabelQtExemplares;
     private JTextField textQtExemplares;
+    private JButton btnVoltar;
 
     public void cadastro(){
         AcervoBase item = new AcervoBase();
@@ -73,6 +74,14 @@ public class TelaCadastro extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 cadastro();
+            }
+        });
+        btnVoltar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                TelaMenu tm = new TelaMenu();
+                dispose();
+                tm.setVisible(true);
             }
         });
     }

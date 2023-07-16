@@ -43,6 +43,7 @@ public class TelaUpdate extends JFrame{
     private JLabel JLabelimg;
     private JLabel JLabelid;
     private JTextField textId;
+    private JButton btnVoltar;
 
     public void atualizar(){
         AcervoBase item = new AcervoBase();
@@ -75,6 +76,14 @@ public class TelaUpdate extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 atualizar();
+            }
+        });
+        btnVoltar.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                TelaMenu tm = new TelaMenu();
+                dispose();
+                tm.setVisible(true);
             }
         });
     }
