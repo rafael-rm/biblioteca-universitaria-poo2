@@ -46,7 +46,7 @@ public class TelaFicha extends JFrame {
                 item = AcervoControler.buscarAcervo(id);
                 if (!Objects.equals(item.getTitulo(), "Default")) {
 
-                    autor.setText(item.getTitulo());
+                    autor.setText(item.getAutor());
                     titulo.setText(item.getTitulo());
                     cidade.setText(item.getCidade());
                     edicao.setText(String.valueOf(item.getEdicao()));
