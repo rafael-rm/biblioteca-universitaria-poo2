@@ -8,7 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import Views.TelaMenu;
 public class TelaLogin extends JDialog {
-    private JTextField textUsuario;
+    public JTextField textUsuario;
     private JPasswordField passSenha;
     private JLabel lUsuario;
     private JLabel lSenha;

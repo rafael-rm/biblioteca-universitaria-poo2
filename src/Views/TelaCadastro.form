@@ -309,6 +309,7 @@
             <item value="Mídia"/>
             <item value="Tcc"/>
             <item value="Mapa"/>
+            <item value="Documento"/>
           </model>
         </properties>
       </component>

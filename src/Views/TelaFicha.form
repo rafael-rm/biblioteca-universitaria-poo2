@@ -1,43 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="Views.TelaFicha">
-  <grid id="27dc6" binding="Tela" layout-manager="GridLayoutManager" row-count="4" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+  <grid id="27dc6" binding="Tela" layout-manager="GridLayoutManager" row-count="3" column-count="14" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
     <margin top="0" left="0" bottom="0" right="0"/>
     <constraints>
-      <xy x="20" y="20" width="819" height="400"/>
+      <xy x="20" y="20" width="839" height="400"/>
     </constraints>
     <properties>
       <background color="-918802"/>
     </properties>
     <border type="none"/>
     <children>
-      <component id="5f012" class="javax.swing.JLabel" binding="labeltext">
-        <constraints>
-          <grid row="0" column="0" row-span="3" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false">
-            <preferred-size width="62" height="14"/>
-          </grid>
-        </constraints>
-        <properties>
-          <font name="Arial" size="12" style="1"/>
-          <text value="Insira o ID:"/>
-        </properties>
-      </component>
-      <component id="cb93f" class="javax.swing.JTextField" binding="textId">
-        <constraints>
-          <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="9" fill="0" indent="0" use-parent-layout="false">
-            <preferred-size width="150" height="-1"/>
-          </grid>
-        </constraints>
-        <properties/>
-      </component>
-      <grid id="12f85" binding="PanelFicha" layout-manager="GridLayoutManager" row-count="6" column-count="28" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+      <grid id="12f85" binding="PanelFicha" layout-manager="GridLayoutManager" row-count="5" column-count="28" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
         <margin top="0" left="0" bottom="0" right="0"/>
         <constraints>
-          <grid row="3" column="0" row-span="1" col-span="2" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+          <grid row="2" column="0" row-span="1" col-span="14" vsize-policy="3" hsize-policy="3" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <background color="-1"/>
+          <background color="-918802"/>
         </properties>
-        <border type="line">
+        <border type="line" title="Ficha catalográfica" title-justification="3" title-position="2">
           <color color="-16777216"/>
         </border>
         <children>
@@ -122,27 +103,9 @@
               <text value="- Cidade:"/>
             </properties>
           </component>
-          <component id="12603" class="javax.swing.JLabel" binding="textisbn">
-            <constraints>
-              <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="9" fill="0" indent="0" use-parent-layout="false"/>
-            </constraints>
-            <properties>
-              <font name="Courier New"/>
-              <text value="ISBN:"/>
-            </properties>
-          </component>
-          <component id="d5734" class="javax.swing.JLabel" binding="isbn">
-            <constraints>
-              <grid row="3" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="9" fill="0" indent="0" use-parent-layout="false"/>
-            </constraints>
-            <properties>
-              <font name="Courier New"/>
-              <text value="isbn"/>
-            </properties>
-          </component>
           <component id="96d4e" class="javax.swing.JLabel" binding="assunto">
             <constraints>
-              <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="9" fill="0" indent="0" use-parent-layout="false"/>
+              <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="9" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
               <font name="Courier New"/>
@@ -151,7 +114,7 @@
           </component>
           <component id="23f7b" class="javax.swing.JLabel" binding="palavra">
             <constraints>
-              <grid row="4" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="9" fill="0" indent="0" use-parent-layout="false"/>
+              <grid row="3" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="9" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
               <font name="Courier New"/>
@@ -160,7 +123,7 @@
           </component>
           <component id="fcf7d" class="javax.swing.JLabel" binding="textCdu">
             <constraints>
-              <grid row="5" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="9" fill="0" indent="0" use-parent-layout="false"/>
+              <grid row="4" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="9" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
               <font name="Courier New"/>
@@ -169,19 +132,10 @@
           </component>
           <component id="b8822" class="javax.swing.JLabel" binding="cdu">
             <constraints>
-              <grid row="5" column="5" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="9" fill="0" indent="0" use-parent-layout="false"/>
+              <grid row="4" column="4" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="9" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
               <text value=""/>
-            </properties>
-          </component>
-          <component id="8d89a" class="javax.swing.JLabel" binding="Cdu">
-            <constraints>
-              <grid row="5" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="9" fill="0" indent="0" use-parent-layout="false"/>
-            </constraints>
-            <properties>
-              <font name="Courier New"/>
-              <text value="cdu"/>
             </properties>
           </component>
           <component id="28ac1" class="javax.swing.JLabel" binding="cidade">
@@ -204,12 +158,48 @@
           </component>
         </children>
       </grid>
+      <component id="5f012" class="javax.swing.JLabel" binding="labeltext">
+        <constraints>
+          <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false">
+            <preferred-size width="62" height="14"/>
+          </grid>
+        </constraints>
+        <properties>
+          <font name="Arial" size="12" style="1"/>
+          <text value="Insira o ID:"/>
+        </properties>
+      </component>
+      <component id="cb93f" class="javax.swing.JTextField" binding="textId">
+        <constraints>
+          <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="0" indent="0" use-parent-layout="false">
+            <preferred-size width="150" height="-1"/>
+          </grid>
+        </constraints>
+        <properties/>
+      </component>
       <component id="ac47f" class="javax.swing.JButton" binding="btnOk">
         <constraints>
-          <grid row="2" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+          <grid row="1" column="1" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="9" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
           <text value="Ok"/>
+        </properties>
+      </component>
+      <component id="12196" class="javax.swing.JButton" binding="btnCancelar">
+        <constraints>
+          <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="Voltar"/>
+        </properties>
+      </component>
+      <component id="e66df" class="javax.swing.JLabel">
+        <constraints>
+          <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <icon value="Pictures/touchscreen_book_bookmark_ebook_icon_191190 (2).png"/>
+          <text value=""/>
         </properties>
       </component>
     </children>

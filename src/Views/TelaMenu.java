@@ -4,7 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
+import Views.*;
 
 public class TelaMenu extends JFrame {
     private JPanel Menu;
@@ -14,14 +14,17 @@ public class TelaMenu extends JFrame {
     private JLabel JLabelOp;
     private JButton btnOk;
     private JButton btnVoltar;
+    private JLabel nome;
 
+    private TelaLogin tl;
 
     public TelaMenu (){
 
         setContentPane(Menu);
         setMinimumSize(new Dimension(400, 400));
 
-
+        TelaLogin tl = new TelaLogin(null);
+        nome.setText(tl.textUsuario.getText());
 
         btnOk.addActionListener(new ActionListener() {
             @Override
@@ -43,6 +46,9 @@ public class TelaMenu extends JFrame {
                         tup.setVisible(true);
                         break;
                     case 3:
+                        TelaFicha tf = new TelaFicha();
+                        dispose();
+                        tf.setVisible(true);
                         break;
 
 
