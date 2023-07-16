@@ -4,9 +4,7 @@ import Controllers.AcervoControler;
 
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.Scanner;
 import Infrastructure.DatabaseMysql;
-import Views.TelaCadastro;
 
 public class AcervoBase {
     protected String tipoAcervo;
@@ -37,70 +35,13 @@ public class AcervoBase {
         ano = 0;
         cdu = "Default";
         assunto = "Default";
-        palavras_chave = new ArrayList<String>();
         palavras_chave_string = "Default";
         qtd_exemplares = 0;
         emprestados = 0;
     }
 
-    private TelaCadastro tc;
-
-    public void cadastrar(){
-
-        Scanner scan = new Scanner(System.in);
-        AcervoControler controller = AcervoControler.getInstance("prod");
-        int qtdAutores, qtdPalavrasChave;
-
-        System.out.println("Digite o título: ");
-        titulo = scan.nextLine();
-        System.out.println("Digite a quantidade de autores: ");
-        qtdAutores = scan.nextInt();
-        System.out.println("Digite a edição: ");
-        scan = new Scanner(System.in);
-        edicao = scan.nextInt();
-        System.out.println("Digite a cidade: ");
-        scan = new Scanner(System.in);
-        cidade = scan.nextLine();
-        System.out.println("Digite a editora: ");
-        editora = scan.nextLine();
-        System.out.println("Digite o ano: ");
-        scan = new Scanner(System.in);
-        ano = scan.nextInt();
-        System.out.println("Digite o CDU: ");
-        scan = new Scanner(System.in);
-        cdu = scan.nextLine();
-        System.out.println("Digite o assunto: ");
-        assunto = scan.nextLine();
-        System.out.println("Digite a quantidade de palavras chave: ");
-        scan = new Scanner(System.in);
-        qtdPalavrasChave = scan.nextInt();
-        for (int i = 0; i < qtdPalavrasChave; i++) {
-            String palavraChave;
-            System.out.println("Digite a palavra chave: ");
-            scan = new Scanner(System.in);
-            palavraChave = scan.nextLine();
-            palavras_chave.add(palavraChave);
-        }
-        System.out.println("Digite a quantidade de exemplares: ");
-        scan = new Scanner(System.in);
-        qtd_exemplares = scan.nextInt();
-
-        if (id == 0) {
-            id = AcervoBase.getIdCounter();
-            id++;
-        }
-
-        palavras_chave_string = "";
-        for (int i = 0; i < palavras_chave.size(); i++) {
-            palavras_chave_string += palavras_chave.get(i);
-            if (i != palavras_chave.size() - 1)
-                palavras_chave_string +=" , ";
-        }
-    }
-
     public void inserirNoBanco(AcervoBase acervo){
         DatabaseMysql db = new DatabaseMysql();
-        Statement stmt = null;
         String sql = "INSERT INTO acervo (id, tipo, titulo, autor, edicao, cidade, editora, ano, cdu, assunto, palavras_chave, qtd_exemplares, tam_pag, num_pag, emprestados) VALUES (" +
                 acervo.getId() + ", '" +
                 acervo.getTipoAcervo() + "', '" +
@@ -168,25 +109,6 @@ public class AcervoBase {
             e.printStackTrace();
         }
         return acervo;
-    }
-
-    public void imprimir(){
-        System.out.println("ID: " + id);
-        System.out.println("Título: " + titulo);
-        System.out.println("Autores: ");
-
-        System.out.println("Edição: " + edicao);
-        System.out.println("Cidade: " + cidade);
-        System.out.println("Editora: " + editora);
-        System.out.println("Ano: " + ano);
-        System.out.println("CDU: " + cdu);
-        System.out.println("Assunto: " + assunto);
-        System.out.println("Palavras chave:");
-        for (int i = 0; i < palavras_chave.size(); i++) {
-            System.out.print(" " + palavras_chave.get(i));
-        }
-        System.out.println("\nQuantidade de exemplares: " + qtd_exemplares);
-        System.out.println("Quantidade de exemplares emprestados: " + emprestados);
     }
 
     public static boolean getItem (int id){

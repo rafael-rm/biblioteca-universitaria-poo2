@@ -13,17 +13,6 @@ public class Documento extends AcervoBase {
     protected float tam_pag;
 
     @Override
-    public void cadastrar(){
-        super.cadastrar();
-        Scanner scan = new Scanner(System.in);
-        System.out.println("Insira o número de páginas: ");
-        num_pag = scan.nextInt();
-        System.out.println("Insira o tamanho da página: ");
-        scan = new Scanner(System.in);
-        tam_pag = scan.nextFloat();
-    }
-
-    @Override
     public void inserirNoBanco(AcervoBase acervo){
         super.inserirNoBanco(acervo);
         DatabaseMysql db = new DatabaseMysql();
@@ -45,13 +34,6 @@ public class Documento extends AcervoBase {
 
     public void setTam_pag(float tam_pag) {
         this.tam_pag = tam_pag;
-    }
-
-    @Override
-    public void imprimir() {
-        super.imprimir();
-        System.out.println("Número de páginas: " + num_pag);
-        System.out.println("Tamanho da página: " + tam_pag);
     }
 
     public static Object obterDoBanco(int id, Documento acervo){

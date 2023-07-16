@@ -10,14 +10,6 @@ import java.util.Scanner;
 public class Livro extends Documento {
     protected String isbn;
 
-    @Override
-    public void cadastrar(){
-        super.cadastrar();
-        Scanner scan = new Scanner(System.in);
-        System.out.println("Insira o isbn");
-        isbn = scan.nextLine();
-    }
-
     public static Object obterDoBanco(int id, Livro acervo){
         DatabaseMysql db = new DatabaseMysql();
         Connection conn = db.getConnection();
@@ -47,11 +39,6 @@ public class Livro extends Documento {
         return acervo;
     }
 
-    @Override
-    public void imprimir() {
-        super.imprimir();
-        System.out.println("ISBN: " + isbn);
-    }
 
     @Override
     public void inserirNoBanco(AcervoBase acervo){
