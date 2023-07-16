@@ -100,12 +100,13 @@ public class AcervoBase {
 
     public void inserirNoBanco(AcervoBase acervo){
         DatabaseMysql db = new DatabaseMysql();
+        Statement stmt = null;
         String sql = "INSERT INTO acervo (id, tipo, titulo, autor, edicao, cidade, editora, ano, cdu, assunto, palavras_chave, qtd_exemplares, tam_pag, num_pag, emprestados) VALUES (" +
                 acervo.getId() + ", '" +
                 acervo.getTipoAcervo() + "', '" +
-                acervo.getTitulo() + "', " +
-                acervo.getAutor() + "', " +
-                acervo.getEdicao() + ", '" +
+                acervo.getTitulo() + "', '" +
+                acervo.getAutor() + "', '" +
+                acervo.getEdicao() + "', '" +
                 acervo.getCidade() + "', '" +
                 acervo.getEditora() + "', " +
                 acervo.getAno() + ", '" +
