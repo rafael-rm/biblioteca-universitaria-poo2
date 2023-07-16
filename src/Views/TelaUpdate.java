@@ -59,6 +59,8 @@ public class TelaUpdate extends JFrame{
         item.setEdicao(Integer.parseInt(textEdicao.getText()));
         item.setQtd_exemplares(Integer.parseInt(textQtExemplares.getText()));
         item.setTipoAcervo(Objects.requireNonNull(cbTipo.getSelectedItem()).toString());
+        item.setTam_pag(Integer.parseInt(textTam.getText()));
+        item.setNum_pag(Integer.parseInt(textQt.getText()));
         item.setId(Integer.parseInt(textId.getText()));
 
         boolean status = AcervoControler.editarAcervo(item);

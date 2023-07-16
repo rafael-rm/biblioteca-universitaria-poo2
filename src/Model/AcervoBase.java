@@ -125,7 +125,7 @@ public class AcervoBase {
         String sql = "UPDATE acervo SET " +
                 "titulo = '" + acervo.getTitulo() + "', " +
                 "edicao = " + acervo.getEdicao() + ", " +
-                "autor = " + acervo.getAutor() + ", " +
+                "autor = '" + acervo.getAutor() + "', " +
                 "cidade = '" + acervo.getCidade() + "', " +
                 "editora = '" + acervo.getEditora() + "', " +
                 "ano = " + acervo.getAno() + ", " +
@@ -133,8 +133,8 @@ public class AcervoBase {
                 "assunto = '" + acervo.getAssunto() + "', " +
                 "palavras_chave = '" + acervo.getPalavras_chave_string() + "', " +
                 "qtd_exemplares = " + acervo.getQtd_exemplares() + ", " +
-                "emprestados = " + acervo.getEmprestados() + " " +
-                "tam_pag = " + acervo.getTam_pag() + " " +
+                "emprestados = " + acervo.getEmprestados() + ", " +
+                "tam_pag = " + acervo.getTam_pag() + ", " +
                 "num_pag = " + acervo.getNum_pag() + " " +
                 "WHERE id = " + id + ";";
         db.execute(sql);
