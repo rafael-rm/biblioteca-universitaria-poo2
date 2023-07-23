@@ -7,10 +7,10 @@ import java.sql.Statement;
 
 public class DatabaseMysql {
     private static final String DRIVER = "com.mysql.cj.jdbc.Driver";
-    private static final String URL = "jdbc:mysql://hyzen-database.mysql.database.azure.com";
+    private static final String URL = "jdbc:mysql://test-database.mysql.database.azure.com";
     private static final String PORT = "3306";
-    private static final String USER = "hyzen";
-    private static final String PASS = "Rafael123@";
+    private static final String USER = "test";
+    private static final String PASS = "test";
     private static final String DATABASE = "acervo";
     private static final String TIMEZONE = "useTimezone=true&serverTImezone=UTC";
     private Connection conn;
