@@ -5,7 +5,6 @@ public class Main {
         TelasSettings.temaTelas();
         TelaLogin tl = new TelaLogin(null);
         tl.setVisible(true);
-
   }
 
 }

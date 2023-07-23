@@ -80,6 +80,7 @@ public class TelaUpdate extends JFrame{
                 atualizar();
             }
         });
+
         btnVoltar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

@@ -50,11 +50,10 @@ public class TelaMenu extends JFrame {
                         dispose();
                         tf.setVisible(true);
                         break;
-
-
                 }
             }
         });
+
         btnVoltar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -64,6 +63,4 @@ public class TelaMenu extends JFrame {
             }
         });
     }
-
-
 }

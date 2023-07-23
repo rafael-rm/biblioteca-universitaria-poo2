@@ -62,6 +62,7 @@ public class TelaFicha extends JFrame {
                 }
             }
         });
+
         btnCancelar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -71,5 +72,4 @@ public class TelaFicha extends JFrame {
             }
         });
     }
-
 }

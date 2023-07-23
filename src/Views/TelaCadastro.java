@@ -76,6 +76,7 @@ public class TelaCadastro extends JFrame{
                 cadastro();
             }
         });
+
         btnVoltar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

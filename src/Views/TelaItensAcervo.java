@@ -80,6 +80,7 @@ public class TelaItensAcervo extends JFrame {
                 }
             }
         });
+
         btnListar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -104,6 +105,5 @@ public class TelaItensAcervo extends JFrame {
             }
         });
     }
-
 }
 

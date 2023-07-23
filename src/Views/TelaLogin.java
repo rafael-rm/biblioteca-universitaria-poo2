@@ -41,6 +41,7 @@ public class TelaLogin extends JDialog {
                 }
             }
         });
+
         btnCancelar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -49,5 +50,4 @@ public class TelaLogin extends JDialog {
         });
 
     }
-
 }
